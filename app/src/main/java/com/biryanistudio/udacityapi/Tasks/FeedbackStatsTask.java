@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedbackStats;
 import com.biryanistudio.udacityapi.Models.FeedbackStats;
+import com.biryanistudio.udacityapi.Service.UdacityHttpClient;
 import com.biryanistudio.udacityapi.Service.UdacityService;
 import com.biryanistudio.udacityapi.UI.Fragments.FeedbackStatsFragment;
 
@@ -28,9 +29,11 @@ public class FeedbackStatsTask extends AsyncTask<FeedbackStatsFragment, Void, Fe
     protected FeedbackStats doInBackground(FeedbackStatsFragment... params) {
         updateUIInterface = params[0];
         try {
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .client(UdacityHttpClient.getClient())
                     .build();
 
             UdacityService udacityService = retrofit.create(UdacityService.class);
@@ -44,7 +47,7 @@ public class FeedbackStatsTask extends AsyncTask<FeedbackStatsFragment, Void, Fe
         return null;
     }
 
-    protected void onPostExecute (FeedbackStats feedbackStats) {
+    protected void onPostExecute(FeedbackStats feedbackStats) {
         updateUIInterface.feedbackStatsUI(feedbackStats);
     }
 }
