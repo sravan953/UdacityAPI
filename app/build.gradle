@@ -16,7 +16,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        applicationVariants.all { variant ->
+            variant.buildConfigField "String", "API_KEY", "\"" + getValueForKey('API_KEY') + "\""
+
+        }
     }
+
+}
+
+def getValueForKey(key) {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('keys.properties')))
+    return props[key]
 }
 
 dependencies {
