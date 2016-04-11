@@ -3,10 +3,11 @@ package com.biryanistudio.udacityapi.Tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.biryanistudio.udacityapi.UI.Fragments.FeedbackFragment;
 import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedback;
 import com.biryanistudio.udacityapi.Models.Feedback;
+import com.biryanistudio.udacityapi.Service.UdacityHttpClient;
 import com.biryanistudio.udacityapi.Service.UdacityService;
+import com.biryanistudio.udacityapi.UI.Fragments.FeedbackFragment;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,12 +33,13 @@ public class FeedbackTask extends AsyncTask<FeedbackFragment, Void, List<Feedbac
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .client(UdacityHttpClient.getClient())
                     .build();
 
             UdacityService udacityService = retrofit.create(UdacityService.class);
             Call<List<Feedback>> feedbacksCall = udacityService.getFeedback();
             List<Feedback> feedbacks = feedbacksCall.execute().body();
-            for(Feedback feedback : feedbacks) {
+            for (Feedback feedback : feedbacks) {
                 Log.i(TAG, feedback.toString());
             }
             return feedbacks;
@@ -47,7 +49,7 @@ public class FeedbackTask extends AsyncTask<FeedbackFragment, Void, List<Feedbac
         return null;
     }
 
-    protected void onPostExecute (List<Feedback> feedbacks) {
+    protected void onPostExecute(List<Feedback> feedbacks) {
         updateUIInterface.feedbackUI(feedbacks);
     }
 }
