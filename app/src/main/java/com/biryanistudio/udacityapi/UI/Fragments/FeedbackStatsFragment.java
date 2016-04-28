@@ -7,15 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedback;
 import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedbackStats;
 import com.biryanistudio.udacityapi.Models.FeedbackStats;
 import com.biryanistudio.udacityapi.Tasks.FeedbackStatsTask;
-import com.biryanistudio.udacityapi.Interfaces.IUpdateSubmissions;
-import com.biryanistudio.udacityapi.Models.Submissions;
 import com.biryanistudio.udacityapi.R;
-
-import java.util.List;
 
 /**
  * Created by Sravan on 07-Apr-16.
@@ -24,7 +19,7 @@ public class FeedbackStatsFragment extends Fragment implements IUpdateFeedbackSt
     View view;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.from(container.getContext()).inflate(R.layout.fragment_dummy, container, false);
+        view = inflater.inflate(R.layout.fragment_feedback, container, false);
         new FeedbackStatsTask().execute(this);
         return view;
     }

@@ -2,11 +2,11 @@ package com.biryanistudio.udacityapi.Tasks;
 
 import android.os.AsyncTask;
 
-import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedback;
-import com.biryanistudio.udacityapi.Models.Feedback;
+import com.biryanistudio.udacityapi.Interfaces.IUpdateCurrentReviews;
+import com.biryanistudio.udacityapi.Models.Submission;
 import com.biryanistudio.udacityapi.Service.RetrofitInstance;
 import com.biryanistudio.udacityapi.Service.UdacityService;
-import com.biryanistudio.udacityapi.UI.Fragments.FeedbackFragment;
+import com.biryanistudio.udacityapi.UI.Fragments.CurrentReviewsFragment;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,25 +19,25 @@ import retrofit2.Retrofit;
  */
 
 
-public class FeedbackTask extends AsyncTask<FeedbackFragment, Void, List<Feedback>> {
+public class CurrentReviewsTask extends AsyncTask<CurrentReviewsFragment, Void, List<Submission>> {
     private final String TAG = getClass().getSimpleName();
-    private IUpdateFeedback updateUIInterface;
+    private IUpdateCurrentReviews updateUIInterface;
 
     @Override
-    protected List<Feedback> doInBackground(FeedbackFragment... params) {
+    protected List<Submission> doInBackground(CurrentReviewsFragment... params) {
         updateUIInterface = params[0];
         try {
             Retrofit retrofit = RetrofitInstance.retrofit;
             UdacityService udacityService = retrofit.create(UdacityService.class);
-            Call<List<Feedback>> feedbacksCall = udacityService.getFeedback();
-            return feedbacksCall.execute().body();
+            Call<List<Submission>> submissionsCall = udacityService.getSubmissions();
+            return submissionsCall.execute().body();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    protected void onPostExecute(List<Feedback> feedbacks) {
-        updateUIInterface.feedbackUI(feedbacks);
+    protected void onPostExecute(List<Submission> submissions) {
+        updateUIInterface.currentReviewsUI(submissions);
     }
 }

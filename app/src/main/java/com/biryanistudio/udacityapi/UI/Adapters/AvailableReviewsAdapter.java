@@ -1,0 +1,59 @@
+package com.biryanistudio.udacityapi.UI.Adapters;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import com.biryanistudio.udacityapi.Models.Certification;
+import com.biryanistudio.udacityapi.R;
+
+import java.util.List;
+
+/**
+ * Created by Sravan on 07-Apr-16.
+ */
+public class AvailableReviewsAdapter extends ArrayAdapter {
+    private final String TAG = getClass().getSimpleName();
+    private int resource;
+    private List<Certification> certificationsList;
+    private ViewHolder holder;
+
+    public AvailableReviewsAdapter(Context context, int resource, List<Certification> certificationsList) {
+        super(context, resource, certificationsList);
+        this.resource = resource;
+        this.certificationsList = certificationsList;
+    }
+
+    public View getView (int position, View convertView, ViewGroup parent) {
+        Certification certification = certificationsList.get(position);
+        Log.d(TAG, certification.toString());
+        if(convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
+            holder = new ViewHolder();
+            holder.project = (TextView) convertView.findViewById(R.id.project);
+            holder.awaitingCount = (TextView) convertView.findViewById(R.id.awaiting_review_count);
+            convertView.setTag(holder);
+        }
+        try {
+            holder = (ViewHolder) convertView.getTag();
+            holder.project.setText(certification.getProjectName());
+            holder.awaitingCount.setText(String.valueOf(certification.getAwaitingReviewCount()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.project.setText("Oops! Looks like something went wrong!");
+        }
+
+        convertView.setAlpha(0.0f);
+        convertView.animate().alpha(1.0f).setStartDelay(position * 50).start();
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        TextView project;
+        TextView awaitingCount;
+    }
+}

@@ -1,8 +1,9 @@
 package com.biryanistudio.udacityapi.Service;
 
+import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.Models.Feedback;
 import com.biryanistudio.udacityapi.Models.FeedbackStats;
-import com.biryanistudio.udacityapi.Models.Submissions;
+import com.biryanistudio.udacityapi.Models.Submission;
 
 import java.util.List;
 
@@ -13,8 +14,11 @@ import retrofit2.http.GET;
  * Created by Sravan on 05-Apr-16.
  */
 public interface UdacityService {
-    @GET("/api/v1/me/submissions.json")
-    Call<List<Submissions>> getSubmissions();
+    @GET("/api/v1/me/certifications.json")
+    Call<List<Certification>> getCertificatons();
+
+    @GET("/api/v1/me/submissions/assigned.json")
+    Call<List<Submission>> getSubmissions();
 
     @GET("/api/v1/me/student_feedbacks.json")
     Call<List<Feedback>> getFeedback();

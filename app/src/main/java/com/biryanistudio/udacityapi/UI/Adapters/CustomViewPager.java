@@ -5,28 +5,29 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.biryanistudio.udacityapi.UI.Fragments.FeedbackFragment;
-import com.biryanistudio.udacityapi.UI.Fragments.SubmissionsFragment;
+import com.biryanistudio.udacityapi.UI.Fragments.CurrentReviewsFragment;
+import com.biryanistudio.udacityapi.UI.Fragments.AvailableReviewsFragment;
 
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class CustomPagerAdapter extends FragmentPagerAdapter {
+public class CustomViewPager extends FragmentPagerAdapter {
     private final String TAG = getClass().getSimpleName();
 
-    public CustomPagerAdapter(FragmentManager fm) {
+    public CustomViewPager(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
         switch(position) {
-            case 0: return "Available Reviews";
-            case 1: return "Current Reviews";
+            case 0: return "Current Reviews";
+            case 1: return "Available Reviews";
             case 2: return "Your Ratings";
             default: return "Pager Item";
         }
@@ -35,9 +36,9 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return new SubmissionsFragment();
-            case 1: return new FeedbackFragment();
-            case 2: return null;
+            case 0: return new CurrentReviewsFragment();
+            case 1: return new AvailableReviewsFragment();
+            case 2: return new FeedbackFragment();
             default: return null;
         }
     }
