@@ -8,7 +8,6 @@ import com.biryanistudio.udacityapi.Service.RetrofitInstance;
 import com.biryanistudio.udacityapi.Service.UdacityService;
 import com.biryanistudio.udacityapi.UI.Fragments.AvailableReviewsFragment;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;

@@ -1,7 +1,7 @@
 package com.biryanistudio.udacityapi.UI.Fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedbackStats;
 import com.biryanistudio.udacityapi.Models.FeedbackStats;
-import com.biryanistudio.udacityapi.Tasks.FeedbackStatsTask;
 import com.biryanistudio.udacityapi.R;
+import com.biryanistudio.udacityapi.Tasks.FeedbackStatsTask;
 
 /**
  * Created by Sravan on 07-Apr-16.

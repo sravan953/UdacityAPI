@@ -11,10 +11,10 @@ import com.biryanistudio.udacityapi.UI.Fragments.AvailableReviewsFragment;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class CustomViewPager extends FragmentPagerAdapter {
+public class CustomViewPagerAdapter extends FragmentPagerAdapter {
     private final String TAG = getClass().getSimpleName();
 
-    public CustomViewPager(FragmentManager fm) {
+    public CustomViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

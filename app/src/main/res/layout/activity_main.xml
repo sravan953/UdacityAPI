@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/linearLayout">
 
     <com.biryanistudio.udacityapi.UI.SlidingLayout.SlidingTabLayout
         android:id="@+id/sliding_tabs"
@@ -10,10 +10,18 @@
         android:layout_height="wrap_content" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:background="@android:color/white"/>
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_below="@id/sliding_tabs"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/error_text_view"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/text_no_connectivity"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

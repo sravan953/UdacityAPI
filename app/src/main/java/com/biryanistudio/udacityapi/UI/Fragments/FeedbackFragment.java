@@ -2,6 +2,7 @@ package com.biryanistudio.udacityapi.UI.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +13,38 @@ import com.biryanistudio.udacityapi.Models.Feedback;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.Tasks.FeedbackTask;
 import com.biryanistudio.udacityapi.UI.Adapters.FeedbackAdapter;
+import com.biryanistudio.udacityapi.UI.MainActivity;
 
 import java.util.List;
 
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class FeedbackFragment extends Fragment implements IUpdateFeedback {
+public class FeedbackFragment extends Fragment implements IUpdateFeedback, SwipeRefreshLayout.OnRefreshListener {
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
     private FeedbackAdapter feedbackAdapter;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feedback, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
         listView = (ListView) view.findViewById(R.id.listView);
-        new FeedbackTask().execute(this);
+        if(MainActivity.API_TOKEN_present) new FeedbackTask().execute(this);
         return view;
     }
 
     @Override
     public void feedbackUI(List<Feedback> feedbackList) {
+        swipeRefreshLayout.setRefreshing(false);
+
         feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
         listView.setAdapter(feedbackAdapter);
+    }
+
+    @Override
+    public void onRefresh() {
+        if(MainActivity.API_TOKEN_present) new FeedbackTask().execute(this);
     }
 }

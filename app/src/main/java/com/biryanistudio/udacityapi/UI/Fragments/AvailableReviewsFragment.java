@@ -13,6 +13,7 @@ import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.Tasks.AvailableReviewsTask;
 import com.biryanistudio.udacityapi.UI.Adapters.AvailableReviewsAdapter;
+import com.biryanistudio.udacityapi.UI.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,9 @@ public class AvailableReviewsFragment extends Fragment implements IUpdateAvailab
         View view = inflater.inflate(R.layout.fragment_available_reviews, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
         listView = (ListView) view.findViewById(R.id.listView);
-        new AvailableReviewsTask().execute(this);
+        if(MainActivity.API_TOKEN_present) new AvailableReviewsTask().execute(this);
         return view;
     }
 
@@ -54,6 +56,6 @@ public class AvailableReviewsFragment extends Fragment implements IUpdateAvailab
 
     @Override
     public void onRefresh() {
-        new AvailableReviewsTask().execute(this);
+        if(MainActivity.API_TOKEN_present) new AvailableReviewsTask().execute(this);
     }
 }

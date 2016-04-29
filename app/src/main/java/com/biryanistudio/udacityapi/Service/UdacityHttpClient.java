@@ -1,7 +1,5 @@
 package com.biryanistudio.udacityapi.Service;
 
-import com.biryanistudio.udacityapi.BuildConfig;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -16,13 +14,13 @@ import okhttp3.Response;
  * client to automatically add the headers to the request.
  */
 public class UdacityHttpClient {
-    public static OkHttpClient getClient() {
+    public static OkHttpClient getClient(final String API_TOKEN) {
         return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request().newBuilder()
-                                .addHeader("Authorization", BuildConfig.API_KEY)
+                                .addHeader("Authorization", API_TOKEN)
                                 .addHeader("Content-Length", "0")
                                 .build();
                         return chain.proceed(request);
