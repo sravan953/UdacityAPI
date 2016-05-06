@@ -1,6 +1,7 @@
 package com.biryanistudio.udacityapi.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.biryanistudio.udacityapi.Interfaces.IUpdateCurrentReviews;
 import com.biryanistudio.udacityapi.Models.Submission;
@@ -24,6 +25,7 @@ public class CurrentReviewsTask extends AsyncTask<CurrentReviewsFragment, Void, 
 
     @Override
     protected List<Submission> doInBackground(CurrentReviewsFragment... params) {
+        Log.d(TAG, "doInBackground");
         updateUIInterface = params[0];
         try {
             Retrofit retrofit = RetrofitInstance.retrofit;

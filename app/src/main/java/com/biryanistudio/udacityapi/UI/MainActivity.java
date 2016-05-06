@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(validAPIAccessToken()) hideErrorTextView();
+        if(validateAPIAccessToken()) hideErrorTextView();
         else showErrorTextView();
     }
 
@@ -60,18 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void initUI() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        viewPager.setOffscreenPageLimit(2);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         errorTextView = (TextView) findViewById(R.id.error_text_view);
     }
 
     private void setUI() {
         customViewPagerAdapter = new CustomViewPagerAdapter(getFragmentManager());
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(customViewPagerAdapter);
         slidingTabLayout.setViewPager(viewPager);
     }
 
-    private boolean validAPIAccessToken() {
+    private boolean validateAPIAccessToken() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String token = sharedPreferences.getString(getString(R.string.key_API_TOKEN), "null");
         if(token.equalsIgnoreCase("null")) {

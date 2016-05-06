@@ -3,7 +3,7 @@ package com.biryanistudio.udacityapi.Models;
 /**
  * Created by Sravan on 27-Apr-16.
  */
-public class    Project {
+public class Project {
     int id; // (integer, optional)
     String name; // (string, optional)
     String description; // (string, optional)
@@ -20,5 +20,9 @@ public class    Project {
 
     public int getAwaitingReviewCount() {
         return awaiting_review_count;
+    }
+
+    public int getProjectID() {
+        return id;
     }
 }

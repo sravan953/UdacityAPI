@@ -1,13 +1,13 @@
 package com.biryanistudio.udacityapi.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedback;
 import com.biryanistudio.udacityapi.Models.Feedback;
 import com.biryanistudio.udacityapi.Service.RetrofitInstance;
 import com.biryanistudio.udacityapi.Service.UdacityService;
 import com.biryanistudio.udacityapi.UI.Fragments.FeedbackFragment;
-import com.biryanistudio.udacityapi.UI.MainActivity;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class FeedbackTask extends AsyncTask<FeedbackFragment, Void, List<Feedbac
 
     @Override
     protected List<Feedback> doInBackground(FeedbackFragment... params) {
+        Log.d(TAG, "doInBackground");
         updateUIInterface = params[0];
         try {
             Retrofit retrofit = RetrofitInstance.retrofit;

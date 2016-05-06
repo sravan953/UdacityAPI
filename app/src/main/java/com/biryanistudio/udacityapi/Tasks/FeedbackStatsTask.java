@@ -1,6 +1,7 @@
 package com.biryanistudio.udacityapi.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.biryanistudio.udacityapi.Interfaces.IUpdateFeedbackStats;
 import com.biryanistudio.udacityapi.Models.FeedbackStats;
@@ -22,12 +23,12 @@ public class FeedbackStatsTask extends AsyncTask<FeedbackStatsFragment, Void, Fe
 
     @Override
     protected FeedbackStats doInBackground(FeedbackStatsFragment... params) {
+        Log.d(TAG, "doInBackground");
         updateUIInterface = params[0];
         try {
             Retrofit retrofit = RetrofitInstance.retrofit;
             UdacityService udacityService = retrofit.create(UdacityService.class);
             Call<FeedbackStats> feedbackStatsCall = udacityService.getFeedbackStats();
-            // TODO Add Log msg
             return feedbackStatsCall.execute().body();
         } catch (Exception e) {
             e.printStackTrace();

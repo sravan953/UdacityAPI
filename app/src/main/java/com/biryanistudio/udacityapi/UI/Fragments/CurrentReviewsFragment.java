@@ -1,7 +1,7 @@
 package com.biryanistudio.udacityapi.UI.Fragments;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,10 +38,14 @@ public class CurrentReviewsFragment extends Fragment implements IUpdateCurrentRe
 
     @Override
     public void currentReviewsUI(List<Submission> submissionsList) {
-        swipeRefreshLayout.setRefreshing(false);
+        try {
+            swipeRefreshLayout.setRefreshing(false);
 
-        currentReviewsAdapter = new CurrentReviewsAdapter(getActivity(), R.layout.item_current_review, submissionsList);
-        listView.setAdapter(currentReviewsAdapter);
+            currentReviewsAdapter = new CurrentReviewsAdapter(getActivity(), R.layout.item_current_review, submissionsList);
+            listView.setAdapter(currentReviewsAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

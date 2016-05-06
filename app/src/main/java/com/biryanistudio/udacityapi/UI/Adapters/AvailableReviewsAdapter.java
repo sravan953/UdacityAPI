@@ -18,27 +18,29 @@ import java.util.List;
  */
 public class AvailableReviewsAdapter extends ArrayAdapter {
     private final String TAG = getClass().getSimpleName();
+    private Context context;
     private int resource;
     private List<Certification> certificationsList;
     private ViewHolder holder;
 
     public AvailableReviewsAdapter(Context context, int resource, List<Certification> certificationsList) {
         super(context, resource, certificationsList);
+        this.context = context;
         this.resource = resource;
         this.certificationsList = certificationsList;
     }
 
     public View getView (int position, View convertView, ViewGroup parent) {
-        Certification certification = certificationsList.get(position);
-        Log.d(TAG, certification.toString());
-        if(convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
-            holder = new ViewHolder();
-            holder.project = (TextView) convertView.findViewById(R.id.project);
-            holder.awaitingCount = (TextView) convertView.findViewById(R.id.awaiting_review_count);
-            convertView.setTag(holder);
-        }
         try {
+            Certification certification = certificationsList.get(position);
+            Log.d(TAG, certification.toString());
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(resource, parent, false);
+                holder = new ViewHolder();
+                holder.project = (TextView) convertView.findViewById(R.id.project);
+                holder.awaitingCount = (TextView) convertView.findViewById(R.id.awaiting_review_count);
+                convertView.setTag(holder);
+            }
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(certification.getProjectName());
             holder.awaitingCount.setText(String.valueOf(certification.getAwaitingReviewCount()));

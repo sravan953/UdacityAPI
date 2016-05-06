@@ -37,10 +37,14 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback, Swipe
 
     @Override
     public void feedbackUI(List<Feedback> feedbackList) {
-        swipeRefreshLayout.setRefreshing(false);
+        try {
+            swipeRefreshLayout.setRefreshing(false);
 
-        feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
-        listView.setAdapter(feedbackAdapter);
+            feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
+            listView.setAdapter(feedbackAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

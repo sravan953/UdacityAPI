@@ -9,6 +9,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by Sravan on 05-Apr-16.
@@ -23,6 +25,9 @@ public interface UdacityService {
     @GET("/api/v1/me/student_feedbacks.json")
     Call<List<Feedback>> getFeedback();
 
-    @GET(" /api/v1/me/student_feedbacks/stats.json")
+    @GET("/api/v1/me/student_feedbacks/stats.json")
     Call<FeedbackStats> getFeedbackStats();
+
+    @POST("/projects/{project_id}/submissions/assign")
+    Call<Submission> postAssignProject(@Path("project_id") int projectID);
 }

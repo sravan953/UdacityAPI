@@ -8,5 +8,6 @@ import java.util.List;
  * Created by Sravan on 07-Apr-16.
  */
 public interface IUpdateAvailableReviews {
-    void availableReviews(List<Certification> certifications);
+    void availableReviewsUI(List<Certification> certifications);
+    void refreshAvailableReviewsUI(int responseCode);
 }

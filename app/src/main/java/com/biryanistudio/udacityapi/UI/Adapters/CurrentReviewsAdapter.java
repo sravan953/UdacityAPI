@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by Sravan on 07-Apr-16.
@@ -38,29 +39,25 @@ public class CurrentReviewsAdapter extends ArrayAdapter {
     }
 
     public View getView (int position, View convertView, ViewGroup parent) {
-        Submission submission = submissionsList.get(position);
-        Log.d(TAG, submission.toString());
-        if(convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
-            holder = new ViewHolder();
-            holder.project = (TextView) convertView.findViewById(R.id.project);
-            holder.price = (TextView) convertView.findViewById(R.id.price);
-            holder.timeLeft = (TextView) convertView.findViewById(R.id.time_left);
-            convertView.setTag(holder);
-        }
         try {
+            Submission submission = submissionsList.get(position);
+            Log.d(TAG, submission.toString());
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
+                holder = new ViewHolder();
+                holder.project = (TextView) convertView.findViewById(R.id.project);
+                holder.price = (TextView) convertView.findViewById(R.id.price);
+                holder.timeLeft = (TextView) convertView.findViewById(R.id.time_left);
+                convertView.setTag(holder);
+            }
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(submission.getProject());
             holder.price.setText("$" + submission.getRate());
-            d = inputDateFormat.parse(submission.getAssignedAt());
-            int assignedHours = Integer.parseInt(outputDateFormat.format(d));
-            int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            int hoursLeft = currentHours - assignedHours;
-            holder.timeLeft.setText(String.valueOf(hoursLeft) + "h");
+            holder.timeLeft.setText(String.valueOf(getRemainingHoursForReview(submission)) + "h left");
         } catch (JSONException e) {
             e.printStackTrace();
             holder.project.setText("Oops! Looks like something went wrong!");
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -71,5 +68,13 @@ public class CurrentReviewsAdapter extends ArrayAdapter {
         TextView project;
         TextView price;
         TextView timeLeft;
+    }
+
+    private int getRemainingHoursForReview(Submission submission) throws ParseException {
+        inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        d = inputDateFormat.parse(submission.getAssignedAt());
+        int assignedHours = Integer.parseInt(outputDateFormat.format(d));
+        int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        return 12 - (currentHours - assignedHours);
     }
 }

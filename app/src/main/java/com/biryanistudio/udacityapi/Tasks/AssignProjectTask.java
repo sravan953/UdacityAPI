@@ -4,41 +4,42 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.biryanistudio.udacityapi.Interfaces.IUpdateAvailableReviews;
-import com.biryanistudio.udacityapi.Models.Certification;
+import com.biryanistudio.udacityapi.Models.Submission;
 import com.biryanistudio.udacityapi.Service.RetrofitInstance;
 import com.biryanistudio.udacityapi.Service.UdacityService;
 import com.biryanistudio.udacityapi.UI.Fragments.AvailableReviewsFragment;
 
-import java.util.List;
-
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by Sravan on 05-Apr-16.
+ * Created by Sravan on 01-May-16.
  */
 
 
-public class AvailableReviewsTask extends AsyncTask<AvailableReviewsFragment, Void, List<Certification>> {
+public class AssignProjectTask extends AsyncTask<AvailableReviewsFragment, Void, Response<Submission>> {
     private final String TAG = getClass().getSimpleName();
     private IUpdateAvailableReviews updateUIInterface;
 
     @Override
-    protected List<Certification> doInBackground(AvailableReviewsFragment... params) {
+    protected Response<Submission> doInBackground(AvailableReviewsFragment... params) {
         Log.d(TAG, "doInBackground");
         updateUIInterface = params[0];
+        int projectID = params[0].projectID;
+        Log.d(TAG, String.valueOf(projectID));
         try {
             Retrofit retrofit = RetrofitInstance.retrofit;
             UdacityService udacityService = retrofit.create(UdacityService.class);
-            Call<List<Certification>> certificationsCall = udacityService.getCertificatons();
-            return certificationsCall.execute().body();
+            Call<Submission> assignProjectCall = udacityService.postAssignProject(projectID);
+            return assignProjectCall.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    protected void onPostExecute(List<Certification> certifications) {
-        updateUIInterface.availableReviewsUI(certifications);
+    protected void onPostExecute(Response<Submission> response) {
+        updateUIInterface.refreshAvailableReviewsUI(response.code());
     }
 }

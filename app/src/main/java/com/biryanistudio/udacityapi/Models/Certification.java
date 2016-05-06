@@ -16,14 +16,16 @@ public class Certification {
     int trainings_count; // (integer, optional)
     Project project; // (project, optional)
 
-    boolean availableForReview;
-
     public String getProjectName() {
         return project.getProjectName();
     }
 
     public int getAwaitingReviewCount() {
         return project.getAwaitingReviewCount();
+    }
+
+    public int getProjectID() {
+        return project.getProjectID();
     }
 
     @Override
