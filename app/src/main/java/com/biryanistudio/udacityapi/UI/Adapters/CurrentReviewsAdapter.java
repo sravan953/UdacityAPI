@@ -36,6 +36,7 @@ public class CurrentReviewsAdapter extends ArrayAdapter {
         super(context, resource, submissionsList);
         this.resource = resource;
         this.submissionsList = submissionsList;
+        inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public View getView (int position, View convertView, ViewGroup parent) {
@@ -53,7 +54,7 @@ public class CurrentReviewsAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(submission.getProject());
             holder.price.setText("$" + submission.getRate());
-            holder.timeLeft.setText(String.valueOf(getRemainingHoursForReview(submission)) + "h left");
+            holder.timeLeft.setText(getRemainingHoursForReview(submission) + "h left");
         } catch (JSONException e) {
             e.printStackTrace();
             holder.project.setText("Oops! Looks like something went wrong!");
@@ -70,11 +71,10 @@ public class CurrentReviewsAdapter extends ArrayAdapter {
         TextView timeLeft;
     }
 
-    private int getRemainingHoursForReview(Submission submission) throws ParseException {
-        inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    private String getRemainingHoursForReview(Submission submission) throws ParseException {
         d = inputDateFormat.parse(submission.getAssignedAt());
         int assignedHours = Integer.parseInt(outputDateFormat.format(d));
         int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        return 12 - (currentHours - assignedHours);
+        return String.valueOf(12 - (currentHours - assignedHours));
     }
 }

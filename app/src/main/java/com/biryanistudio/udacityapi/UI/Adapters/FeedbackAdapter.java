@@ -15,7 +15,6 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -29,15 +28,13 @@ public class FeedbackAdapter extends ArrayAdapter {
     private List<Feedback> feedbackList;
     private ViewHolder holder;
     private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private SimpleDateFormat outputDateFormatHours = new SimpleDateFormat("HH");
-    private SimpleDateFormat outputDateFormatDays = new SimpleDateFormat("dd");
-    private SimpleDateFormat outputDateFormatMonth = new SimpleDateFormat("MM");
     private Date d;
 
     public FeedbackAdapter(Context context, int resource, List<Feedback> feedbackList) {
         super(context, resource, feedbackList);
         this.resource = resource;
         this.feedbackList = feedbackList;
+        inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public View getView (int position, View convertView, ViewGroup parent) {
@@ -56,8 +53,8 @@ public class FeedbackAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(feedback.getProject());
             holder.body.setText(feedback.getBody());
-            holder.rating.setText(String.valueOf(feedback.getRating()) + "/5");
-            holder.updated_at.setText(String.valueOf(getElapsedHoursForFeedback(feedback)) + "h ago");
+            holder.rating.setText(feedback.getRating() + "/5");
+            holder.updated_at.setText(getElapsedHoursForFeedback(feedback));
         } catch (JSONException e) {
             e.printStackTrace();
             holder.project.setText("Oops! Looks like something went wrong!");
@@ -77,24 +74,18 @@ public class FeedbackAdapter extends ArrayAdapter {
         TextView updated_at;
     }
 
-    private int getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
-        inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
         d = inputDateFormat.parse(feedback.getUpdatedAt());
-        int assignedHours = Integer.parseInt(outputDateFormatHours.format(d));
-        int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int remainingHours = currentHours - assignedHours;
+        long assignedLong = d.getTime();
+        long currentLong = System.currentTimeMillis();
+        long remainingLong = currentLong - assignedLong;
+        int remainingHours = (int) remainingLong / (1000 * 60 * 60);
         if(remainingHours > 24) {
-            int assignedDate = Integer.parseInt(outputDateFormatDays.format(d));
-            int currentDay = Calendar.getInstance().get(Calendar.DATE);
-            int remainingDate = currentDay - assignedDate;
-            if(remainingDate < 0) {
-                int maximumNumberOfDays = Calendar.getInstance().getActualMaximum(Calendar.MONTH);
-                remainingDate = maximumNumberOfDays - remainingDate;
-            }
-            return remainingDate;
+            remainingHours  = remainingHours / 24;
+            return String.valueOf(remainingHours) + "d ago";
         }
         else {
-            return remainingHours;
+            return String.valueOf(remainingHours) + "h ago";
         }
     }
 }
