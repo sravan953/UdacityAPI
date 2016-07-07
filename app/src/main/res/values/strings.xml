@@ -7,7 +7,9 @@
 
     <string name="pref_get_API_TOKEN">Get API Token</string>
 
-    <string name="text_no_connectivity">Check your network connection and/or your Udacity API Access Token and please try again.</string>
+    <string name="text_no_connectivity">Please check your network connection and/or your Udacity API Access Token.</string>
 
-    <string name="empty_available_review">No projects available for coding review right now, check back later!</string>
+    <string name="empty_available_review">No projects available for coding review right now.</string>
+
+    <string name="error_message">Oops! Looks like something went wrong!</string>
 </resources>

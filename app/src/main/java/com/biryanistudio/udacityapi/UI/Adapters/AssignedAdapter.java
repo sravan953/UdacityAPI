@@ -23,7 +23,7 @@ import java.util.TimeZone;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class CurrentReviewsAdapter extends ArrayAdapter {
+public class AssignedAdapter extends ArrayAdapter {
     private final String TAG = getClass().getSimpleName();
     private int resource;
     private List<Submission> submissionsList;
@@ -32,7 +32,7 @@ public class CurrentReviewsAdapter extends ArrayAdapter {
     private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH");
     private Date d;
 
-    public CurrentReviewsAdapter(Context context, int resource, List<Submission> submissionsList) {
+    public AssignedAdapter(Context context, int resource, List<Submission> submissionsList) {
         super(context, resource, submissionsList);
         this.resource = resource;
         this.submissionsList = submissionsList;
