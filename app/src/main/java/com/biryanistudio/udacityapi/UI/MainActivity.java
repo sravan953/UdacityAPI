@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initUI();
         setUI();
     }
@@ -69,12 +68,13 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(customViewPagerAdapter);
         slidingTabLayout.setViewPager(viewPager);
+        slidingTabLayout.setDistributeEvenly(true);
     }
 
     private boolean validateAPIAccessToken() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = sharedPreferences.getString(getString(R.string.key_API_TOKEN), "null");
-        if(token.equalsIgnoreCase("null")) {
+        String token = sharedPreferences.getString(getString(R.string.key_API_TOKEN), "");
+        if(token.equalsIgnoreCase("")) {
             Log.d(TAG, "Token not found!");
             API_TOKEN_present = false;
             return false;

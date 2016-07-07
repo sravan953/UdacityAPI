@@ -29,7 +29,12 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback, Swipe
         View view = inflater.inflate(R.layout.fragment_feedback, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
         listView = (ListView) view.findViewById(R.id.listView);
         if(MainActivity.API_TOKEN_present) new FeedbackTask().execute(this);
         return view;

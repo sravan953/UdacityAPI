@@ -36,8 +36,14 @@ public class AvailableReviewsFragment extends Fragment implements IUpdateAvailab
         View view = inflater.inflate(R.layout.fragment_available_reviews, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
         listView = (ListView) view.findViewById(R.id.listView);
+        listView.setEmptyView(view.findViewById(R.id.empty_available_review));
         listView.setOnItemClickListener(this);
         if(MainActivity.API_TOKEN_present) new AvailableReviewsTask().execute(this);
         return view;
@@ -47,7 +53,6 @@ public class AvailableReviewsFragment extends Fragment implements IUpdateAvailab
     public void availableReviewsUI(List<Certification> allCertifications) {
         try {
             swipeRefreshLayout.setRefreshing(false);
-
             List<Certification> certifications = getAvailableCertificationsOnly(allCertifications);
             availableReviewsAdapter = new AvailableReviewsAdapter(getActivity(), R.layout.item_available_review, certifications);
             listView.setAdapter(availableReviewsAdapter);

@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -27,7 +28,7 @@ public class FeedbackAdapter extends ArrayAdapter {
     private int resource;
     private List<Feedback> feedbackList;
     private ViewHolder holder;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     private Date d;
 
     public FeedbackAdapter(Context context, int resource, List<Feedback> feedbackList) {
@@ -58,8 +59,6 @@ public class FeedbackAdapter extends ArrayAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
             holder.project.setText("Oops! Looks like something went wrong!");
-        } catch (ParseException e) {
-            e.printStackTrace();
         } catch(Exception e) {
             e.printStackTrace();
         }
