@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools">
     <EditTextPreference
         android:key="@string/key_API_TOKEN"
         android:title="@string/pref_API_TOKEN"
         android:summary="Click on 'Get Token' below if you don't already have it."
-        android:defaultValue="null"/>
+        android:defaultValue=""/>
     <Preference
         android:title="@string/pref_get_API_TOKEN" >
         <intent android:action="android.intent.action.VIEW"

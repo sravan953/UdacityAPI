@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">Udacity API</string>
+    <string name="app_name">Udacity Reviewer Dashboard</string>
     <string name="action_settings">Settings</string>
 
     <string name="key_API_TOKEN">key_API_TOKEN</string>
     <string name="pref_API_TOKEN">Your Udacity API Access Token</string>
 
-    <string name="pref_get_API_TOKEN">Get Token</string>
+    <string name="pref_get_API_TOKEN">Get API Token</string>
 
     <string name="text_no_connectivity">Check your network connection and/or your Udacity API Access Token and please try again.</string>
+
+    <string name="empty_available_review">No projects available for coding review right now, check back later!</string>
 </resources>
