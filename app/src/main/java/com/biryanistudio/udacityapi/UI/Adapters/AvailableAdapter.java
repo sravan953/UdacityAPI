@@ -16,14 +16,14 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AvailableReviewsAdapter extends ArrayAdapter {
+public class AvailableAdapter extends ArrayAdapter {
     private final String TAG = getClass().getSimpleName();
     private Context context;
     private int resource;
     private List<Certification> certificationsList;
     private ViewHolder holder;
 
-    public AvailableReviewsAdapter(Context context, int resource, List<Certification> certificationsList) {
+    public AvailableAdapter(Context context, int resource, List<Certification> certificationsList) {
         super(context, resource, certificationsList);
         this.context = context;
         this.resource = resource;
@@ -46,7 +46,7 @@ public class AvailableReviewsAdapter extends ArrayAdapter {
             holder.awaitingCount.setText(String.valueOf(certification.getAwaitingReviewCount()));
         } catch (Exception e) {
             e.printStackTrace();
-            holder.project.setText("Oops! Looks like something went wrong!");
+            holder.project.setText(R.string.error_message);
         }
 
         convertView.setAlpha(0.0f);

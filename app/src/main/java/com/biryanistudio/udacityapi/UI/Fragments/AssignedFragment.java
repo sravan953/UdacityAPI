@@ -2,6 +2,7 @@ package com.biryanistudio.udacityapi.UI.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import com.biryanistudio.udacityapi.Interfaces.IUpdateCurrentReviews;
 import com.biryanistudio.udacityapi.Models.Submission;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.Tasks.CurrentReviewsTask;
-import com.biryanistudio.udacityapi.UI.Adapters.CurrentReviewsAdapter;
+import com.biryanistudio.udacityapi.UI.Adapters.AssignedAdapter;
 import com.biryanistudio.udacityapi.UI.MainActivity;
 
 import java.util.List;
@@ -20,16 +21,20 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class CurrentReviewsFragment extends Fragment implements IUpdateCurrentReviews, SwipeRefreshLayout.OnRefreshListener
+public class AssignedFragment extends Fragment implements IUpdateCurrentReviews, SwipeRefreshLayout.OnRefreshListener
 {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
-    private CurrentReviewsAdapter currentReviewsAdapter;
+    private AssignedAdapter assignedAdapter;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_current_reviews, container, false);
+        View view = inflater.inflate(R.layout.fragment_assigned_reviews, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorAccent),
+                ContextCompat.getColor(getActivity(),R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(),R.color.colorSecondary),
+                ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -46,8 +51,8 @@ public class CurrentReviewsFragment extends Fragment implements IUpdateCurrentRe
         try {
             swipeRefreshLayout.setRefreshing(false);
 
-            currentReviewsAdapter = new CurrentReviewsAdapter(getActivity(), R.layout.item_current_review, submissionsList);
-            listView.setAdapter(currentReviewsAdapter);
+            assignedAdapter = new AssignedAdapter(getActivity(), R.layout.item_assigned_review, submissionsList);
+            listView.setAdapter(assignedAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }

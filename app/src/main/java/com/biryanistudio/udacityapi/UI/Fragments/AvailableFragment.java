@@ -3,6 +3,7 @@ package com.biryanistudio.udacityapi.UI.Fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.Tasks.AssignProjectTask;
 import com.biryanistudio.udacityapi.Tasks.AvailableReviewsTask;
-import com.biryanistudio.udacityapi.UI.Adapters.AvailableReviewsAdapter;
+import com.biryanistudio.udacityapi.UI.Adapters.AvailableAdapter;
 import com.biryanistudio.udacityapi.UI.MainActivity;
 
 import java.util.ArrayList;
@@ -25,17 +26,21 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AvailableReviewsFragment extends Fragment implements IUpdateAvailableReviews, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class AvailableFragment extends Fragment implements IUpdateAvailableReviews, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private final String TAG = getClass().getSimpleName();
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
-    private AvailableReviewsAdapter availableReviewsAdapter;
+    private AvailableAdapter availableAdapter;
     public int projectID;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_available_reviews, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorAccent),
+                ContextCompat.getColor(getActivity(),R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(),R.color.colorSecondary),
+                ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -54,8 +59,8 @@ public class AvailableReviewsFragment extends Fragment implements IUpdateAvailab
         try {
             swipeRefreshLayout.setRefreshing(false);
             List<Certification> certifications = getAvailableCertificationsOnly(allCertifications);
-            availableReviewsAdapter = new AvailableReviewsAdapter(getActivity(), R.layout.item_available_review, certifications);
-            listView.setAdapter(availableReviewsAdapter);
+            availableAdapter = new AvailableAdapter(getActivity(), R.layout.item_available_review, certifications);
+            listView.setAdapter(availableAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +95,7 @@ public class AvailableReviewsFragment extends Fragment implements IUpdateAvailab
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        projectID = ((Certification)availableReviewsAdapter.getItem(position)).getProjectID();
+        projectID = ((Certification) availableAdapter.getItem(position)).getProjectID();
         Log.d(TAG, "Clicked project_id: " + String.valueOf(projectID));
         new AssignProjectTask().execute(this);
     }

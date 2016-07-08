@@ -2,6 +2,7 @@ package com.biryanistudio.udacityapi.UI.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,10 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback, Swipe
         View view = inflater.inflate(R.layout.fragment_feedback, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorAccent),
+                ContextCompat.getColor(getActivity(),R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(),R.color.colorSecondary),
+                ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
