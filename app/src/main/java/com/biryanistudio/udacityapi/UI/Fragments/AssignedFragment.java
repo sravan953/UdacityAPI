@@ -25,7 +25,6 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
 {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
-    private AssignedAdapter assignedAdapter;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_assigned_reviews, container, false);
@@ -42,6 +41,7 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
             }
         });
         listView = (ListView) view.findViewById(R.id.listView);
+        listView.setEmptyView(view.findViewById(R.id.empty_assigned_review));
         if(MainActivity.API_TOKEN_present) new CurrentReviewsTask().execute(this);
         return view;
     }
@@ -51,7 +51,7 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
         try {
             swipeRefreshLayout.setRefreshing(false);
 
-            assignedAdapter = new AssignedAdapter(getActivity(), R.layout.item_assigned_review, submissionsList);
+            AssignedAdapter assignedAdapter = new AssignedAdapter(getActivity(), R.layout.item_assigned_review, submissionsList);
             listView.setAdapter(assignedAdapter);
         } catch (Exception e) {
             e.printStackTrace();
