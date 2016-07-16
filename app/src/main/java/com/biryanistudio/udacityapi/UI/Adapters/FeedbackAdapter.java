@@ -53,7 +53,10 @@ public class FeedbackAdapter extends ArrayAdapter {
             }
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(feedback.getProject());
-            holder.body.setText(feedback.getBody());
+            //TODO: Feedback comments do not get displayed correctly when scrolling from bottom of list to top.
+            if ( feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals("") )
+                holder.body.setVisibility(View.GONE);
+            else holder.body.setText(feedback.getBody());
             holder.rating.setText(feedback.getRating() + "/5");
             holder.updated_at.setText(getElapsedHoursForFeedback(feedback));
         } catch (JSONException e) {
@@ -64,13 +67,6 @@ public class FeedbackAdapter extends ArrayAdapter {
         }
 
         return convertView;
-    }
-
-    private static class ViewHolder {
-        TextView project;
-        TextView body;
-        TextView rating;
-        TextView updated_at;
     }
 
     private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
@@ -86,5 +82,12 @@ public class FeedbackAdapter extends ArrayAdapter {
         else {
             return String.valueOf(remainingHours) + "h ago";
         }
+    }
+
+    private static class ViewHolder {
+        TextView project;
+        TextView body;
+        TextView rating;
+        TextView updated_at;
     }
 }
