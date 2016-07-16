@@ -1,67 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    app:cardCornerRadius="@dimen/cardview_default_radius"
-    app:cardElevation="@dimen/cardview_default_elevation"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="@dimen/card_content_padding"
-    tools:context=".UI.MainActivity">
+    android:orientation="vertical"
+    android:padding="@dimen/activity_vertical_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:gravity="start"
-                android:id="@+id/project"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                tools:text="Project Name"/>
-
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:gravity="center"
-                android:id="@+id/rating"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                tools:text="rating"/>
-
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:gravity="end"
-                android:id="@+id/updated_at"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                tools:text="time"/>
-
-        </LinearLayout>
+        android:orientation="horizontal">
 
         <TextView
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/body"
-            android:layout_width="wrap_content"
+            android:id="@+id/project"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="Comment"/>
+            android:layout_weight="4"
+            android:gravity="start"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            tools:text="Project Name"/>
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
+            tools:text="rating"/>
+
+        <TextView
+            android:id="@+id/updated_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
+            tools:text="time"/>
 
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="Comment"/>
+
+</LinearLayout>
+

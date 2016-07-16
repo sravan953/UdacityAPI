@@ -24,7 +24,6 @@ import java.util.List;
 public class FeedbackFragment extends Fragment implements IUpdateFeedback, SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
-    private FeedbackAdapter feedbackAdapter;
 
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feedback, container, false);
@@ -41,6 +40,7 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback, Swipe
             }
         });
         listView = (ListView) view.findViewById(R.id.listView);
+        listView.setEmptyView(view.findViewById(R.id.empty_feedback));
         if(MainActivity.API_TOKEN_present) new FeedbackTask().execute(this);
         return view;
     }
@@ -50,7 +50,7 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback, Swipe
         try {
             swipeRefreshLayout.setRefreshing(false);
 
-            feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
+            FeedbackAdapter feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
             listView.setAdapter(feedbackAdapter);
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,6 +10,8 @@
     <string name="text_no_connectivity">Please check your network connection and/or your Udacity API Access Token.</string>
 
     <string name="empty_available_review">No projects available for coding review right now.</string>
+    <string name="empty_assigned_review">No projects are assigned for coding review right now.</string>
+    <string name="empty_feedback">No feedbacks are available right now.</string>
 
     <string name="error_message">Oops! Looks like something went wrong!</string>
 </resources>

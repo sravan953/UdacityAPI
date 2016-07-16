@@ -15,13 +15,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <TextView
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/empty_available_review"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/empty_available_review"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/empty_available_review"/>
+        </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 
