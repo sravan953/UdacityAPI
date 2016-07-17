@@ -26,6 +26,10 @@
         <receiver android:name=".UI.MainActivity$ConnectivityChangeReceiver">
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
         </receiver>
+
+        <receiver android:name=".AlarmReceiver">
+            <action android:name="com.biryanistudio.udacityapi.SET_ALARM"/>
+        </receiver>
     </application>
 
 </manifest>

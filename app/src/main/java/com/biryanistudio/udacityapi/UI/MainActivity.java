@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.biryanistudio.udacityapi.AlarmHelper;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.UI.Adapters.CustomViewPagerAdapter;
 import com.biryanistudio.udacityapi.Utility;
@@ -34,16 +35,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initUI();
-        setUI();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(validateAPIAccessToken()) hideErrorTextView();
-        else showErrorTextView();
+    protected void onStart() {
+        super.onStart();
+        if (validateAPIAccessToken()) {
+            initUI();
+            setUI();
+            setNotifs();
+            hideErrorTextView();
+        } else {
+            showErrorTextView();
+        }
     }
 
     @Override
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         startActivity(new Intent(this, SettingsActivity.class));
         return super.onOptionsItemSelected(item);
     }
@@ -73,10 +77,27 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void setNotifs() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isNotifEnabled = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_SET_MONTHLY), true);
+        boolean isNotifSet = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_ALREADY_SET), false);
+        if(isNotifEnabled && !isNotifSet) {
+            Log.i(TAG, "Monthly alarms enabled");
+            setMonthlyAlarms();
+            sharedPreferences.edit().putBoolean(getString(R.string.key_NOTIF_ALREADY_SET), true).commit();
+        } else {
+            Log.i(TAG, "Monthly alarms disabled");
+        }
+    }
+
+    private void setMonthlyAlarms() {
+        new AlarmHelper(this).setMonthlyAlarms();
+    }
+
     private boolean validateAPIAccessToken() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String token = sharedPreferences.getString(getString(R.string.key_API_TOKEN), "");
-        if(token.equalsIgnoreCase("")) {
+        if (token.equalsIgnoreCase("")) {
             Log.d(TAG, "Token not found!");
             API_TOKEN_present = false;
             return false;
@@ -104,12 +125,9 @@ public class MainActivity extends AppCompatActivity {
     public class ConnectivityChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "CHANGE");
-            String action = intent.getAction();
-            if(action.equals("android.net.conn.CONNECTIVITY_CHANGE")) {
-                if (Utility.checkNetworkConnectivity(context)) showErrorTextView();
-                else hideErrorTextView();
-            }
+            Log.d(TAG, "CONNECTIVITY CHANGE");
+            if (Utility.checkNetworkConnectivity(context)) showErrorTextView();
+            else hideErrorTextView();
         }
     }
 }

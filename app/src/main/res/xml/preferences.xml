@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:tools="http://schemas.android.com/tools">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <EditTextPreference
         android:key="@string/key_API_TOKEN"
         android:title="@string/pref_API_TOKEN"
         android:summary="Click on 'Get Token' below if you don't already have it."
-        android:defaultValue=""/>
+        android:defaultValue="" />
+
     <Preference
         android:title="@string/pref_get_API_TOKEN" >
         <intent android:action="android.intent.action.VIEW"
             android:data="https://review.udacity.com/#!/submissions/dashboard"/>
     </Preference>
+
+    <SwitchPreference
+        android:key="@string/key_NOTIF_SET_MONTHLY"
+        android:switchTextOn="@string/pref_NOTIF_SET_MONTHLY_ON"
+        android:switchTextOff="@string/pref_NOTIF_SET_MONTHLY_OFF"
+        android:summaryOn="Display a monthly notification reminder to update API token."
+        android:summaryOff="DO NOT display a monthly notification reminder to update API token."
+        android:defaultValue="true" />
+
 </PreferenceScreen>

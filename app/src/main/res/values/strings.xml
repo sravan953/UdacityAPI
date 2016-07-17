@@ -1,17 +1,28 @@
 <resources>
     <string name="app_name">Udacity Reviewer Dashboard</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="true">Settings</string>
 
+    <!-- Settings Screen -->
     <string name="key_API_TOKEN">key_API_TOKEN</string>
     <string name="pref_API_TOKEN">Your Udacity API Access Token</string>
+    <string name="key_NOTIF_SET_MONTHLY">key_NOTIF_SET</string>
+    <string name="key_NOTIF_ALREADY_SET">key_NOTIF_ALREADY_SET</string>
+    <string name="pref_NOTIF_SET_MONTHLY_ON" translatable="true">Enable notifications</string>
+    <string name="pref_NOTIF_SET_MONTHLY_OFF" translatable="true">Disable notifications</string>
 
-    <string name="pref_get_API_TOKEN">Get API Token</string>
+    <string name="pref_get_API_TOKEN" translatable="true">Get API token</string>
 
-    <string name="text_no_connectivity">Please check your network connection and/or your Udacity API Access Token.</string>
+    <string name="text_no_connectivity" translatable="true">Please check your network connection and/or your Udacity API Access Token.</string>
 
-    <string name="empty_available_review">No projects available for coding review right now.</string>
-    <string name="empty_assigned_review">No projects are assigned for coding review right now.</string>
-    <string name="empty_feedback">No feedbacks are available right now.</string>
+    <!-- Main UI -->
+    <string name="empty_available_review" translatable="true">No projects available for review right now.</string>
+    <string name="empty_assigned_review" translatable="true">No projects are assigned for review right now.</string>
+    <string name="empty_feedback" translatable="true">No feedback available right now.</string>
 
-    <string name="error_message">Oops! Looks like something went wrong!</string>
+    <string name="error_message" translatable="true">Oops! Looks like something went wrong!</string>
+
+    <!-- Notification -->
+    <string name="notif_title">Udacity Reviewer Dashboard</string>
+    <string name="notif_text">Udacity API token</string>
+    <string name="notif_text_big">Please update your Udacity API token</string>
 </resources>
