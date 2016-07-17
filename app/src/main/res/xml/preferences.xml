@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- TODO: Try to implement settings in a BottomSheet with SharedPreferences -->
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- TODO: Implement TextInputLayout to improve UI -->
+
     <EditTextPreference
+        android:defaultValue=""
         android:key="@string/key_API_TOKEN"
-        android:title="@string/pref_API_TOKEN"
         android:summary="Click on 'Get Token' below if you don't already have it."
-        android:defaultValue="" />
+        android:title="@string/pref_API_TOKEN"/>
 
     <Preference
         android:title="@string/pref_get_API_TOKEN" >
@@ -14,11 +19,11 @@
     </Preference>
 
     <SwitchPreference
+        android:defaultValue="true"
         android:key="@string/key_NOTIF_SET_MONTHLY"
-        android:switchTextOn="@string/pref_NOTIF_SET_MONTHLY_ON"
-        android:switchTextOff="@string/pref_NOTIF_SET_MONTHLY_OFF"
-        android:summaryOn="Display a monthly notification reminder to update API token."
         android:summaryOff="DO NOT display a monthly notification reminder to update API token."
-        android:defaultValue="true" />
+        android:summaryOn="Display a monthly notification reminder to update API token."
+        android:switchTextOff="@string/pref_NOTIF_SET_MONTHLY_OFF"
+        android:switchTextOn="@string/pref_NOTIF_SET_MONTHLY_ON"/>
 
 </PreferenceScreen>

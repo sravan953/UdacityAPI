@@ -23,13 +23,12 @@ import java.util.TimeZone;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class FeedbackAdapter extends ArrayAdapter {
+public class FeedbackAdapter extends ArrayAdapter<Feedback> {
     private final String TAG = getClass().getSimpleName();
     private int resource;
     private List<Feedback> feedbackList;
     private ViewHolder holder;
     private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-    private Date d;
 
     public FeedbackAdapter(Context context, int resource, List<Feedback> feedbackList) {
         super(context, resource, feedbackList);
@@ -57,11 +56,11 @@ public class FeedbackAdapter extends ArrayAdapter {
             if ( feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals("") )
                 holder.body.setVisibility(View.GONE);
             else holder.body.setText(feedback.getBody());
-            holder.rating.setText(feedback.getRating() + "/5");
+            holder.rating.setText(String.format("%s/5", String.valueOf(feedback.getRating())));
             holder.updated_at.setText(getElapsedHoursForFeedback(feedback));
         } catch (JSONException e) {
             e.printStackTrace();
-            holder.project.setText("Oops! Looks like something went wrong!");
+            holder.project.setText(R.string.error_message);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +69,7 @@ public class FeedbackAdapter extends ArrayAdapter {
     }
 
     private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
-        d = inputDateFormat.parse(feedback.getUpdatedAt());
+        Date d = inputDateFormat.parse(feedback.getUpdatedAt());
         long assignedLong = d.getTime();
         long currentLong = System.currentTimeMillis();
         long remainingLong = currentLong - assignedLong;

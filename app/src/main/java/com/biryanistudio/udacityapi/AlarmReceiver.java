@@ -29,8 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setContentTitle(context.getString(R.string.notif_title))
                 .setContentText(context.getString(R.string.notif_text))
                 .setStyle(new Notification.BigTextStyle().bigText(context.getString(R.string.notif_text_big)))
-                .setSmallIcon(R.drawable
-                        .ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         NotificationManager notificationManager = (NotificationManager)
