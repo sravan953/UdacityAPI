@@ -22,14 +22,14 @@ import com.biryanistudio.udacityapi.UI.Adapters.CustomViewPagerAdapter;
 import com.biryanistudio.udacityapi.Utility;
 
 public class MainActivity extends AppCompatActivity {
+    public static boolean API_TOKEN_present = false;
+    public static String API_TOKEN;
     private final String TAG = getClass().getSimpleName();
     private ViewPager viewPager;
     private CustomViewPagerAdapter customViewPagerAdapter;
     private TextView errorTextView;
     private TabLayout tabLayout;
     private Toolbar toolbar;
-    public static boolean API_TOKEN_present = false;
-    public static String API_TOKEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             setNotifs();
             hideErrorTextView();
         } else {
+            //TODO: Fix crash when no API Token is present.
             showErrorTextView();
         }
     }

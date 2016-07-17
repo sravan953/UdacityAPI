@@ -18,19 +18,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AssignedAdapter extends ArrayAdapter {
+public class AssignedAdapter extends ArrayAdapter<Submission> {
     private final String TAG = getClass().getSimpleName();
     private int resource;
     private List<Submission> submissionsList;
     private ViewHolder holder;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH");
-    private Date d;
+    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+    private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
 
     public AssignedAdapter(Context context, int resource, List<Submission> submissionsList) {
         super(context, resource, submissionsList);
@@ -53,11 +53,12 @@ public class AssignedAdapter extends ArrayAdapter {
             }
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(submission.getProject());
-            holder.price.setText("$" + submission.getRate());
-            holder.timeLeft.setText(getRemainingHoursForReview(submission) + "h left");
+            holder.price.setText(String.format("$%s", submission.getRate()));
+            //TODO: Time time left shows 35h instead of 11h. Need to fix this immediately.
+            holder.timeLeft.setText(String.format("%sh left", getRemainingHoursForReview(submission)));
         } catch (JSONException e) {
             e.printStackTrace();
-            holder.project.setText("Oops! Looks like something went wrong!");
+            holder.project.setText(R.string.error_message);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,16 +66,16 @@ public class AssignedAdapter extends ArrayAdapter {
         return convertView;
     }
 
+    private String getRemainingHoursForReview(Submission submission) throws ParseException {
+        Date d = inputDateFormat.parse(submission.getAssignedAt());
+        int assignedHours = Integer.parseInt(outputDateFormat.format(d));
+        int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        return String.valueOf(12 - (currentHours - assignedHours));
+    }
+
     private static class ViewHolder {
         TextView project;
         TextView price;
         TextView timeLeft;
-    }
-
-    private String getRemainingHoursForReview(Submission submission) throws ParseException {
-        d = inputDateFormat.parse(submission.getAssignedAt());
-        int assignedHours = Integer.parseInt(outputDateFormat.format(d));
-        int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        return String.valueOf(12 - (currentHours - assignedHours));
     }
 }
