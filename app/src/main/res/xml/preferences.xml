@@ -13,9 +13,8 @@
         android:title="@string/pref_API_TOKEN"/>
 
     <Preference
-        android:title="@string/pref_get_API_TOKEN" >
-        <intent android:action="android.intent.action.VIEW"
-            android:data="https://review.udacity.com/#!/submissions/dashboard"/>
+        android:key="@string/pref_get_API_TOKEN"
+        android:title="@string/pref_get_API_TOKEN">
     </Preference>
 
     <SwitchPreference

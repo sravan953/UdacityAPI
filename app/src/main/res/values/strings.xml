@@ -25,4 +25,5 @@
     <string name="notif_title">Udacity Reviewer Dashboard</string>
     <string name="notif_text">Udacity API token</string>
     <string name="notif_text_big">Please update your Udacity API token</string>
+    <string name="API_URL">https://review.udacity.com/#!/submissions/dashboard</string>
 </resources>
