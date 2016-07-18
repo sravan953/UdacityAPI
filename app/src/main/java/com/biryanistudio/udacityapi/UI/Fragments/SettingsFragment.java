@@ -29,7 +29,6 @@ public class SettingsFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
         uri = Uri.parse(getString(R.string.API_URL));
-        bindChromeCustomService();
 		final Preference getAPIToken = findPreference(getString(R.string.pref_get_API_TOKEN));
 		getAPIToken.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
@@ -46,6 +45,7 @@ public class SettingsFragment extends PreferenceFragment {
 	}
 
     private void bindChromeCustomService() {
+        // TODO: Fix this
         final String CHROME_STABLE_PACKAGE = "com.android.chrome";
         CustomTabsServiceConnection connection = new CustomTabsServiceConnection() {
             @Override
