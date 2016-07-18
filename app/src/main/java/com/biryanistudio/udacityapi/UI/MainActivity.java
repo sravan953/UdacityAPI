@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNotifEnabled = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_SET_MONTHLY), true);
         boolean isNotifSet = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_ALREADY_SET), false);
-        if(isNotifEnabled) {
+        if (isNotifEnabled) {
             Log.i(TAG, "Monthly alarms enabled");
-            if(!isNotifSet) {
+            if (!isNotifSet) {
                 Log.i(TAG, "Monthly alarms not set");
                 setMonthlyAlarms();
                 sharedPreferences.edit().putBoolean(getString(R.string.key_NOTIF_ALREADY_SET), true).commit();
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showErrorTextView() {
         viewPager.setVisibility(View.INVISIBLE);
-        tabLayout.setVisibility(View.INVISIBLE);
+        tabLayout.setVisibility(View.GONE);
         errorTextView.setVisibility(View.VISIBLE);
     }
 
