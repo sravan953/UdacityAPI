@@ -26,7 +26,8 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AvailableFragment extends Fragment implements IUpdateAvailableReviews, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class AvailableFragment extends Fragment implements IUpdateAvailableReviews,
+        SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private final String TAG = getClass().getSimpleName();
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;

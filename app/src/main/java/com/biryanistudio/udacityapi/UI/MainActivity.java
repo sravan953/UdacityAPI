@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.biryanistudio.udacityapi.AlarmHelper;
+import com.biryanistudio.udacityapi.Alarm.AlarmHelper;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.UI.Adapters.CustomViewPagerAdapter;
 import com.biryanistudio.udacityapi.Utility;
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     public static String API_TOKEN;
     private final String TAG = getClass().getSimpleName();
     private ViewPager viewPager;
-    private CustomViewPagerAdapter customViewPagerAdapter;
     private TextView errorTextView;
     private TabLayout tabLayout;
     private Toolbar toolbar;
@@ -35,18 +34,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initUI();
+        setUI();
+        setNotifs();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         if (validateAPIAccessToken()) {
-            initUI();
-            setUI();
-            setNotifs();
             hideErrorTextView();
         } else {
-            //TODO: Fix crash when no API Token is present.
             showErrorTextView();
         }
     }
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUI() {
         setSupportActionBar(toolbar);
-        customViewPagerAdapter = new CustomViewPagerAdapter(getFragmentManager());
+        CustomViewPagerAdapter customViewPagerAdapter = new CustomViewPagerAdapter(getFragmentManager());
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(customViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -82,10 +80,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNotifEnabled = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_SET_MONTHLY), true);
         boolean isNotifSet = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_ALREADY_SET), false);
-        if(isNotifEnabled && !isNotifSet) {
+        if(isNotifEnabled) {
             Log.i(TAG, "Monthly alarms enabled");
-            setMonthlyAlarms();
-            sharedPreferences.edit().putBoolean(getString(R.string.key_NOTIF_ALREADY_SET), true).commit();
+            if(!isNotifSet) {
+                Log.i(TAG, "Monthly alarms not set");
+                setMonthlyAlarms();
+                sharedPreferences.edit().putBoolean(getString(R.string.key_NOTIF_ALREADY_SET), true).commit();
+            }
         } else {
             Log.i(TAG, "Monthly alarms disabled");
         }

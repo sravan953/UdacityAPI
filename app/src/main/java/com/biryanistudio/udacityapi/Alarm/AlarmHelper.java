@@ -1,4 +1,4 @@
-package com.biryanistudio.udacityapi;
+package com.biryanistudio.udacityapi.Alarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

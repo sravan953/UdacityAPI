@@ -1,4 +1,4 @@
-package com.biryanistudio.udacityapi;
+package com.biryanistudio.udacityapi.Alarm;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.UI.MainActivity;
 
 /**

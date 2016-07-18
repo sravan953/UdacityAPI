@@ -21,7 +21,8 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class FeedbackFragment extends Fragment implements IUpdateFeedback, SwipeRefreshLayout.OnRefreshListener {
+public class FeedbackFragment extends Fragment implements IUpdateFeedback,
+        SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
 

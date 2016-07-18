@@ -21,8 +21,8 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AssignedFragment extends Fragment implements IUpdateCurrentReviews, SwipeRefreshLayout.OnRefreshListener
-{
+public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
+        SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
 
