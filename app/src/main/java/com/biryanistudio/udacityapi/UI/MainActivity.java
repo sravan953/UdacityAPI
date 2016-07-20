@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
@@ -116,16 +117,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showErrorTextView() {
-        appbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorError));
-        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorError));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorErrorDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorErrorDark));
+        }
+        appbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorError));
+        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorError));
         viewPager.setVisibility(View.INVISIBLE);
         tabLayout.setVisibility(View.GONE);
         errorTextView.setVisibility(View.VISIBLE);
     }
 
     private void hideErrorTextView() {
-        appbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary));
-        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
+            getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
+        }
+        appbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         viewPager.setVisibility(View.VISIBLE);
         tabLayout.setVisibility(View.VISIBLE);
         errorTextView.setVisibility(View.INVISIBLE);

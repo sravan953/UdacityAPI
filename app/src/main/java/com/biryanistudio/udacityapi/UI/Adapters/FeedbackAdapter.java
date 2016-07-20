@@ -37,7 +37,7 @@ public class FeedbackAdapter extends ArrayAdapter<Feedback> {
         inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    public View getView ( final int position, View convertView, final ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         try {
             final Feedback feedback = feedbackList.get(position);
             Log.d(TAG, feedback.toString());
@@ -53,15 +53,18 @@ public class FeedbackAdapter extends ArrayAdapter<Feedback> {
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(feedback.getProject());
             //TODO: Feedback comments do not get displayed correctly when scrolling from bottom of list to top.
-            if ( feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals("") )
+            if (feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals(""))
                 holder.body.setVisibility(View.GONE);
-            else holder.body.setText(feedback.getBody());
+            else {
+                holder.body.setVisibility(View.VISIBLE);
+                holder.body.setText(feedback.getBody());
+            }
             holder.rating.setText(String.format("%s/5", String.valueOf(feedback.getRating())));
             holder.updated_at.setText(getElapsedHoursForFeedback(feedback));
         } catch (final JSONException e) {
             e.printStackTrace();
             holder.project.setText(R.string.error_message);
-        } catch(final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return convertView;
@@ -73,11 +76,10 @@ public class FeedbackAdapter extends ArrayAdapter<Feedback> {
         final long currentLong = System.currentTimeMillis();
         final long remainingLong = currentLong - assignedLong;
         int remainingHours = (int) remainingLong / (1000 * 60 * 60);
-        if(remainingHours > 24) {
-            remainingHours  = remainingHours / 24;
+        if (remainingHours > 24) {
+            remainingHours = remainingHours / 24;
             return String.valueOf(remainingHours) + "d ago";
-        }
-        else {
+        } else {
             return String.valueOf(remainingHours) + "h ago";
         }
     }
