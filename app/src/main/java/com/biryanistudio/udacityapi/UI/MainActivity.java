@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView errorTextView;
     private TabLayout tabLayout;
     private Toolbar toolbar;
+    private AppBarLayout appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         errorTextView = (TextView) findViewById(R.id.error_text_view);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
     }
 
     private void setUI() {
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             if (!isNotifSet) {
                 Log.i(TAG, "Monthly alarms not set");
                 setMonthlyAlarms();
-                sharedPreferences.edit().putBoolean(getString(R.string.key_NOTIF_ALREADY_SET), true).commit();
+                sharedPreferences.edit().putBoolean(getString(R.string.key_NOTIF_ALREADY_SET), true).apply();
             }
         } else {
             Log.i(TAG, "Monthly alarms disabled");
@@ -112,12 +116,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showErrorTextView() {
+        appbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorError));
+        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorError));
         viewPager.setVisibility(View.INVISIBLE);
         tabLayout.setVisibility(View.GONE);
         errorTextView.setVisibility(View.VISIBLE);
     }
 
     private void hideErrorTextView() {
+        appbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary));
+        toolbar.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary));
         viewPager.setVisibility(View.VISIBLE);
         tabLayout.setVisibility(View.VISIBLE);
         errorTextView.setVisibility(View.INVISIBLE);
