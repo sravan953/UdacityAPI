@@ -34,8 +34,8 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
     private AvailableAdapter availableAdapter;
     public int projectID;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_available_reviews, container, false);
+    public View onCreateView (final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_available_reviews, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorAccent),
@@ -56,13 +56,13 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
     }
 
     @Override
-    public void availableReviewsUI(List<Certification> allCertifications) {
+    public void availableReviewsUI(final List<Certification> allCertifications) {
         try {
             swipeRefreshLayout.setRefreshing(false);
-            List<Certification> certifications = getAvailableCertificationsOnly(allCertifications);
+            final List<Certification> certifications = getAvailableCertificationsOnly(allCertifications);
             availableAdapter = new AvailableAdapter(getActivity(), R.layout.item_available_review, certifications);
             listView.setAdapter(availableAdapter);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -72,9 +72,9 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
         if(MainActivity.API_TOKEN_present) new AvailableReviewsTask().execute(this);
     }
 
-    private List<Certification> getAvailableCertificationsOnly(List<Certification> allCertifications) {
-        List<Certification> certifications = new ArrayList<>();
-        for(Certification certification: allCertifications) {
+    private List<Certification> getAvailableCertificationsOnly(final List<Certification> allCertifications) {
+        final List<Certification> certifications = new ArrayList<>();
+        for(final Certification certification: allCertifications) {
             if(certification.getAwaitingReviewCount() > 0) certifications.add(certification);
         }
 
@@ -82,7 +82,7 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
     }
 
     @Override
-    public void refreshAvailableReviewsUI(int responseCode) {
+    public void refreshAvailableReviewsUI(final int responseCode) {
         Log.d(TAG, String.valueOf(responseCode));
         if(responseCode == 201) {
             swipeRefreshLayout.setRefreshing(true);
@@ -95,8 +95,8 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        projectID = ((Certification) availableAdapter.getItem(position)).getProjectID();
+    public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+        projectID = (availableAdapter.getItem(position)).getProjectID();
         Log.d(TAG, "Clicked project_id: " + String.valueOf(projectID));
         new AssignProjectTask().execute(this);
     }

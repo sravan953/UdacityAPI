@@ -8,5 +8,5 @@ import java.util.List;
  * Created by Sravan on 07-Apr-16.
  */
 public interface IUpdateFeedback {
-    void feedbackUI(List<Feedback> feedbacks);
+    void feedbackUI(final List<Feedback> feedbacks);
 }

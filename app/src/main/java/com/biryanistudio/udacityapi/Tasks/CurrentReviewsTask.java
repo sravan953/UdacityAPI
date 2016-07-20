@@ -6,7 +6,7 @@ import android.util.Log;
 import com.biryanistudio.udacityapi.Interfaces.IUpdateCurrentReviews;
 import com.biryanistudio.udacityapi.Models.Submission;
 import com.biryanistudio.udacityapi.Service.RetrofitInstance;
-import com.biryanistudio.udacityapi.Service.UdacityService;
+import com.biryanistudio.udacityapi.Interfaces.UdacityService;
 import com.biryanistudio.udacityapi.UI.Fragments.AssignedFragment;
 
 import java.util.List;
@@ -24,21 +24,21 @@ public class CurrentReviewsTask extends AsyncTask<AssignedFragment, Void, List<S
     private IUpdateCurrentReviews updateUIInterface;
 
     @Override
-    protected List<Submission> doInBackground(AssignedFragment... params) {
+    protected List<Submission> doInBackground(final AssignedFragment... params) {
         Log.d(TAG, "doInBackground");
         updateUIInterface = params[0];
         try {
-            Retrofit retrofit = RetrofitInstance.retrofit;
-            UdacityService udacityService = retrofit.create(UdacityService.class);
-            Call<List<Submission>> submissionsCall = udacityService.getSubmissions();
+            final Retrofit retrofit = RetrofitInstance.retrofit;
+            final UdacityService udacityService = retrofit.create(UdacityService.class);
+            final Call<List<Submission>> submissionsCall = udacityService.getSubmissions();
             return submissionsCall.execute().body();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    protected void onPostExecute(List<Submission> submissions) {
+    protected void onPostExecute(final List<Submission> submissions) {
         updateUIInterface.currentReviewsUI(submissions);
     }
 }

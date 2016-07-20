@@ -4,25 +4,25 @@ package com.biryanistudio.udacityapi.Models;
  * Created by Sravan on 27-Apr-16.
  */
 public class Project {
-    int id; // (integer, optional)
-    String name; // (string, optional)
-    String description; // (string, optional)
-    String required_skills; // (string, optional)
-    int awaiting_review_count; // (integer, optional)
-    String hashtag; // (string, optional)
-    boolean visible; // (boolean, optional)
-    int audit_project_id; // (integer, optional)
-    String[] upload_types; // (Array[string], optional)
+    private int id; // (integer, optional)
+    private String name; // (string, optional)
+    private String description; // (string, optional)
+    private String required_skills; // (string, optional)
+    private int awaiting_review_count; // (integer, optional)
+    private String hashtag; // (string, optional)
+    private boolean visible; // (boolean, optional)
+    private int audit_project_id; // (integer, optional)
+    private String[] upload_types; // (Array[string], optional)
 
-    public String getProjectName() {
+    String getProjectName() {
         return name;
     }
 
-    public int getAwaitingReviewCount() {
+    int getAwaitingReviewCount() {
         return awaiting_review_count;
     }
 
-    public int getProjectID() {
+    int getProjectID() {
         return id;
     }
 }

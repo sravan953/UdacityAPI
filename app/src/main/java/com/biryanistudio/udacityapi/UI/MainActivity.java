@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         startActivity(new Intent(this, SettingsActivity.class));
         return super.onOptionsItemSelected(item);
     }
@@ -74,16 +74,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUI() {
         setSupportActionBar(toolbar);
-        CustomViewPagerAdapter customViewPagerAdapter = new CustomViewPagerAdapter(getFragmentManager());
+        final CustomViewPagerAdapter customViewPagerAdapter = new CustomViewPagerAdapter(getFragmentManager());
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(customViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setNotifs() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isNotifEnabled = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_SET_MONTHLY), true);
-        boolean isNotifSet = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_ALREADY_SET), false);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final boolean isNotifEnabled = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_SET_MONTHLY), true);
+        final boolean isNotifSet = sharedPreferences.getBoolean(getString(R.string.key_NOTIF_ALREADY_SET), false);
         if (isNotifEnabled) {
             Log.i(TAG, "Monthly alarms enabled");
             if (!isNotifSet) {
@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validateAPIAccessToken() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = sharedPreferences.getString(getString(R.string.key_API_TOKEN), "");
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final String token = sharedPreferences.getString(getString(R.string.key_API_TOKEN), "");
         if (token.equalsIgnoreCase("")) {
             Log.d(TAG, "Token not found!");
             API_TOKEN_present = false;
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class ConnectivityChangeReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(final Context context, final Intent intent) {
             Log.d(TAG, "CONNECTIVITY CHANGE");
             if (Utility.checkNetworkConnectivity(context)) showErrorTextView();
             else hideErrorTextView();

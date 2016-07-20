@@ -29,19 +29,19 @@ public class AssignedAdapter extends ArrayAdapter<Submission> {
     private int resource;
     private List<Submission> submissionsList;
     private ViewHolder holder;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-    private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
+    private final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+    private final SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
 
-    public AssignedAdapter(Context context, int resource, List<Submission> submissionsList) {
+    public AssignedAdapter(final Context context, final int resource, final List<Submission> submissionsList) {
         super(context, resource, submissionsList);
         this.resource = resource;
         this.submissionsList = submissionsList;
         inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    public View getView (int position, View convertView, ViewGroup parent) {
+    public View getView (final int position, View convertView, final ViewGroup parent) {
         try {
-            Submission submission = submissionsList.get(position);
+            final Submission submission = submissionsList.get(position);
             Log.d(TAG, submission.toString());
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
@@ -56,20 +56,20 @@ public class AssignedAdapter extends ArrayAdapter<Submission> {
             holder.price.setText(String.format("$%s", submission.getRate()));
             //TODO: Time time left shows 35h instead of 11h. Need to fix this immediately.
             holder.timeLeft.setText(String.format("%sh left", getRemainingHoursForReview(submission)));
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
             holder.project.setText(R.string.error_message);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
         return convertView;
     }
 
-    private String getRemainingHoursForReview(Submission submission) throws ParseException {
-        Date d = inputDateFormat.parse(submission.getAssignedAt());
-        int assignedHours = Integer.parseInt(outputDateFormat.format(d));
-        int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    private String getRemainingHoursForReview(final Submission submission) throws ParseException {
+        final Date d = inputDateFormat.parse(submission.getAssignedAt());
+        final int assignedHours = Integer.parseInt(outputDateFormat.format(d));
+        final int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return String.valueOf(12 - (currentHours - assignedHours));
     }
 

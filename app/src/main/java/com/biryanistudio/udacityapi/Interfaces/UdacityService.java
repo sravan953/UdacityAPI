@@ -1,4 +1,4 @@
-package com.biryanistudio.udacityapi.Service;
+package com.biryanistudio.udacityapi.Interfaces;
 
 import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.Models.Feedback;

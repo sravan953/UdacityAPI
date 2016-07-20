@@ -18,22 +18,22 @@ public class AlarmReceiver extends BroadcastReceiver {
     private final String TAG = getClass().getSimpleName();
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         Log.i(TAG, "onReceive");
         displayNotification(context);
     }
 
-    private void displayNotification(Context context) {
-        PendingIntent pendingIntent = PendingIntent.
+    private void displayNotification(final Context context) {
+        final PendingIntent pendingIntent = PendingIntent.
                 getActivity(context, 953, new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification.Builder notificationBuilder = new Notification.Builder(context)
+        final Notification.Builder notificationBuilder = new Notification.Builder(context)
                 .setContentTitle(context.getString(R.string.notif_title))
                 .setContentText(context.getString(R.string.notif_text))
                 .setStyle(new Notification.BigTextStyle().bigText(context.getString(R.string.notif_text_big)))
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
-        NotificationManager notificationManager = (NotificationManager)
+        final NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(953, notificationBuilder.build());
     }

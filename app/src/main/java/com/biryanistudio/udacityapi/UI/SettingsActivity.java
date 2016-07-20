@@ -9,7 +9,7 @@ public class SettingsActivity extends PreferenceActivity {
     private final String TAG = getClass().getSimpleName();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
