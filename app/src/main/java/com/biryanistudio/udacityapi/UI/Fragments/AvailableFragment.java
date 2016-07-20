@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import java.util.List;
  */
 public class AvailableFragment extends Fragment implements IUpdateAvailableReviews,
         SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
-    private final String TAG = getClass().getSimpleName();
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
     private AvailableAdapter availableAdapter;
@@ -56,7 +54,8 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
     }
 
     @Override
-    public void availableReviewsUI(List<Certification> allCertifications) {
+    public void newData(List data) {
+        List<Certification> allCertifications = data;
         try {
             swipeRefreshLayout.setRefreshing(false);
             List<Certification> certifications = getAvailableCertificationsOnly(allCertifications);
@@ -83,7 +82,6 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
 
     @Override
     public void refreshAvailableReviewsUI(int responseCode) {
-        Log.d(TAG, String.valueOf(responseCode));
         if(responseCode == 201) {
             swipeRefreshLayout.setRefreshing(true);
             if (MainActivity.API_TOKEN_present) new AvailableReviewsTask().execute(this);
@@ -97,7 +95,6 @@ public class AvailableFragment extends Fragment implements IUpdateAvailableRevie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         projectID = ((Certification) availableAdapter.getItem(position)).getProjectID();
-        Log.d(TAG, "Clicked project_id: " + String.valueOf(projectID));
         new AssignProjectTask().execute(this);
     }
 }

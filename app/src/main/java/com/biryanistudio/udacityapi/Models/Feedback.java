@@ -5,7 +5,7 @@ import org.json.JSONException;
 /**
  * Created by Sravan on 05-Apr-16.
  */
-public class Feedback {
+public class Feedback extends BaseModel {
     int project_id; // (integer, optional): ID of the project
     Project project; // (projectName, optional)
     int submission_id; // (integer, optional): ID of the submission

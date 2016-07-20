@@ -47,7 +47,8 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
     }
 
     @Override
-    public void currentReviewsUI(List<Submission> submissionsList) {
+    public void newData(List data) {
+        List<Submission> submissionsList = data;
         try {
             swipeRefreshLayout.setRefreshing(false);
 
@@ -56,6 +57,7 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
