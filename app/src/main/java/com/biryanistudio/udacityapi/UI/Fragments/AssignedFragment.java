@@ -26,8 +26,8 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_assigned_reviews, container, false);
+    public View onCreateView (final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_assigned_reviews, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorAccent),
@@ -47,13 +47,12 @@ public class AssignedFragment extends Fragment implements IUpdateCurrentReviews,
     }
 
     @Override
-    public void currentReviewsUI(List<Submission> submissionsList) {
+    public void currentReviewsUI(final List<Submission> submissionsList) {
         try {
             swipeRefreshLayout.setRefreshing(false);
-
-            AssignedAdapter assignedAdapter = new AssignedAdapter(getActivity(), R.layout.item_assigned_review, submissionsList);
+            final AssignedAdapter assignedAdapter = new AssignedAdapter(getActivity(), R.layout.item_assigned_review, submissionsList);
             listView.setAdapter(assignedAdapter);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }

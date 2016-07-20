@@ -28,18 +28,18 @@ public class FeedbackAdapter extends ArrayAdapter<Feedback> {
     private int resource;
     private List<Feedback> feedbackList;
     private ViewHolder holder;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+    private final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
 
-    public FeedbackAdapter(Context context, int resource, List<Feedback> feedbackList) {
+    public FeedbackAdapter(final Context context, final int resource, final List<Feedback> feedbackList) {
         super(context, resource, feedbackList);
         this.resource = resource;
         this.feedbackList = feedbackList;
         inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    public View getView (int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         try {
-            Feedback feedback = feedbackList.get(position);
+            final Feedback feedback = feedbackList.get(position);
             Log.d(TAG, feedback.toString());
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
@@ -53,32 +53,33 @@ public class FeedbackAdapter extends ArrayAdapter<Feedback> {
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(feedback.getProject());
             //TODO: Feedback comments do not get displayed correctly when scrolling from bottom of list to top.
-            if ( feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals("") )
+            if (feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals(""))
                 holder.body.setVisibility(View.GONE);
-            else holder.body.setText(feedback.getBody());
+            else {
+                holder.body.setVisibility(View.VISIBLE);
+                holder.body.setText(feedback.getBody());
+            }
             holder.rating.setText(String.format("%s/5", String.valueOf(feedback.getRating())));
             holder.updated_at.setText(getElapsedHoursForFeedback(feedback));
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
             holder.project.setText(R.string.error_message);
-        } catch(Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
-
         return convertView;
     }
 
-    private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
-        Date d = inputDateFormat.parse(feedback.getUpdatedAt());
-        long assignedLong = d.getTime();
-        long currentLong = System.currentTimeMillis();
-        long remainingLong = currentLong - assignedLong;
+    private String getElapsedHoursForFeedback(final Feedback feedback) throws ParseException {
+        final Date d = inputDateFormat.parse(feedback.getUpdatedAt());
+        final long assignedLong = d.getTime();
+        final long currentLong = System.currentTimeMillis();
+        final long remainingLong = currentLong - assignedLong;
         int remainingHours = (int) remainingLong / (1000 * 60 * 60);
-        if(remainingHours > 24) {
-            remainingHours  = remainingHours / 24;
+        if (remainingHours > 24) {
+            remainingHours = remainingHours / 24;
             return String.valueOf(remainingHours) + "d ago";
-        }
-        else {
+        } else {
             return String.valueOf(remainingHours) + "h ago";
         }
     }

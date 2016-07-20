@@ -14,7 +14,7 @@ import com.biryanistudio.udacityapi.UI.Fragments.AvailableFragment;
 public class CustomViewPagerAdapter extends FragmentPagerAdapter {
     private final String TAG = getClass().getSimpleName();
 
-    public CustomViewPagerAdapter(FragmentManager fm) {
+    public CustomViewPagerAdapter(final FragmentManager fm) {
         super(fm);
     }
 
@@ -24,7 +24,7 @@ public class CustomViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
+    public CharSequence getPageTitle(final int position) {
         switch(position) {
             case 0: return "Assigned";
             case 1: return "Available";
@@ -34,7 +34,7 @@ public class CustomViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(final int position) {
         switch(position) {
             case 0: return new AssignedFragment();
             case 1: return new AvailableFragment();

@@ -26,8 +26,8 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback,
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_feedback, container, false);
+    public View onCreateView (final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_feedback, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.colorAccent),
@@ -47,13 +47,12 @@ public class FeedbackFragment extends Fragment implements IUpdateFeedback,
     }
 
     @Override
-    public void feedbackUI(List<Feedback> feedbackList) {
+    public void feedbackUI(final List<Feedback> feedbackList) {
         try {
             swipeRefreshLayout.setRefreshing(false);
-
-            FeedbackAdapter feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
+            final FeedbackAdapter feedbackAdapter = new FeedbackAdapter(getActivity(), R.layout.item_feedback, feedbackList);
             listView.setAdapter(feedbackAdapter);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }

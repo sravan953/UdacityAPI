@@ -6,7 +6,7 @@ import android.util.Log;
 import com.biryanistudio.udacityapi.Interfaces.IUpdateAvailableReviews;
 import com.biryanistudio.udacityapi.Models.Submission;
 import com.biryanistudio.udacityapi.Service.RetrofitInstance;
-import com.biryanistudio.udacityapi.Service.UdacityService;
+import com.biryanistudio.udacityapi.Interfaces.UdacityService;
 import com.biryanistudio.udacityapi.UI.Fragments.AvailableFragment;
 
 import retrofit2.Call;
@@ -23,23 +23,23 @@ public class AssignProjectTask extends AsyncTask<AvailableFragment, Void, Respon
     private IUpdateAvailableReviews updateUIInterface;
 
     @Override
-    protected Response<Submission> doInBackground(AvailableFragment... params) {
+    protected Response<Submission> doInBackground(final AvailableFragment... params) {
         Log.d(TAG, "doInBackground");
         updateUIInterface = params[0];
-        int projectID = params[0].projectID;
+        final int projectID = params[0].projectID;
         Log.d(TAG, String.valueOf(projectID));
         try {
-            Retrofit retrofit = RetrofitInstance.retrofit;
-            UdacityService udacityService = retrofit.create(UdacityService.class);
-            Call<Submission> assignProjectCall = udacityService.postAssignProject(projectID);
+            final Retrofit retrofit = RetrofitInstance.retrofit;
+            final UdacityService udacityService = retrofit.create(UdacityService.class);
+            final Call<Submission> assignProjectCall = udacityService.postAssignProject(projectID);
             return assignProjectCall.execute();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    protected void onPostExecute(Response<Submission> response) {
+    protected void onPostExecute(final Response<Submission> response) {
         updateUIInterface.refreshAvailableReviewsUI(response.code());
     }
 }

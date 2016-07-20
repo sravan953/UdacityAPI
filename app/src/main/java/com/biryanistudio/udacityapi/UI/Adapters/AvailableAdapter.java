@@ -23,16 +23,16 @@ public class AvailableAdapter extends ArrayAdapter<Certification> {
     private List<Certification> certificationsList;
     private ViewHolder holder;
 
-    public AvailableAdapter(Context context, int resource, List<Certification> certificationsList) {
+    public AvailableAdapter(final Context context, final int resource, final List<Certification> certificationsList) {
         super(context, resource, certificationsList);
         this.context = context;
         this.resource = resource;
         this.certificationsList = certificationsList;
     }
 
-    public View getView (int position, View convertView, ViewGroup parent) {
+    public View getView ( final int position, View convertView, final ViewGroup parent) {
         try {
-            Certification certification = certificationsList.get(position);
+            final Certification certification = certificationsList.get(position);
             Log.d(TAG, certification.toString());
             if (convertView == null) {
                 convertView = LayoutInflater.from(context).inflate(resource, parent, false);
@@ -44,7 +44,7 @@ public class AvailableAdapter extends ArrayAdapter<Certification> {
             holder = (ViewHolder) convertView.getTag();
             holder.project.setText(certification.getProjectName());
             holder.awaitingCount.setText(String.valueOf(certification.getAwaitingReviewCount()));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             holder.project.setText(R.string.error_message);
         }

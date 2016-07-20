@@ -25,15 +25,15 @@ public class SettingsFragment extends PreferenceFragment {
     private Uri uri;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
         uri = Uri.parse(getString(R.string.API_URL));
 		final Preference getAPIToken = findPreference(getString(R.string.pref_get_API_TOKEN));
 		getAPIToken.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder(mCustomTabsSession)
+			public boolean onPreferenceClick(final Preference preference) {
+				final CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder(mCustomTabsSession)
 						.enableUrlBarHiding()
 						.setToolbarColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
 						.setShowTitle(true)
@@ -47,9 +47,10 @@ public class SettingsFragment extends PreferenceFragment {
     private void bindChromeCustomService() {
         // TODO: Fix this
         final String CHROME_STABLE_PACKAGE = "com.android.chrome";
-        CustomTabsServiceConnection connection = new CustomTabsServiceConnection() {
+        final CustomTabsServiceConnection connection = new CustomTabsServiceConnection() {
+
             @Override
-            public void onCustomTabsServiceConnected(ComponentName name, CustomTabsClient client) {
+            public void onCustomTabsServiceConnected(final ComponentName name, final CustomTabsClient client) {
                 mCustomTabsClient = client;
                 mCustomTabsClient.warmup(0L);
                 mCustomTabsSession = mCustomTabsClient.newSession(null);
@@ -58,7 +59,7 @@ public class SettingsFragment extends PreferenceFragment {
             }
 
             @Override
-            public void onServiceDisconnected(ComponentName name) {
+            public void onServiceDisconnected(final ComponentName name) {
             }
         };
         CustomTabsClient.bindCustomTabsService(getActivity(), CHROME_STABLE_PACKAGE, connection);

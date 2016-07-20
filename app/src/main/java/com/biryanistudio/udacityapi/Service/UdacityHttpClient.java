@@ -13,13 +13,13 @@ import okhttp3.Response;
  * This helper class, intercepts the creation of the
  * client to automatically add the headers to the request.
  */
-public class UdacityHttpClient {
-    public static OkHttpClient getClient(final String API_TOKEN) {
+class UdacityHttpClient {
+    static OkHttpClient getClient(final String API_TOKEN) {
         return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request().newBuilder()
+                    public Response intercept(final Chain chain) throws IOException {
+                        final Request request = chain.request().newBuilder()
                                 .addHeader("Authorization", API_TOKEN)
                                 .addHeader("Content-Length", "0")
                                 .build();

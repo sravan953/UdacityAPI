@@ -16,16 +16,16 @@ import com.biryanistudio.udacityapi.Tasks.FeedbackStatsTask;
  * Created by Sravan on 07-Apr-16.
  */
 public class FeedbackStatsFragment extends Fragment implements IUpdateFeedbackStats {
-    View view;
+    private View view;
 
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView (final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_feedback, container, false);
         new FeedbackStatsTask().execute(this);
         return view;
     }
 
     @Override
-    public void feedbackStatsUI(FeedbackStats feedbackStats) {
+    public void feedbackStatsUI(final FeedbackStats feedbackStats) {
         ((TextView) view.findViewById(R.id.text)).setText(feedbackStats.toString());
     }
 }
