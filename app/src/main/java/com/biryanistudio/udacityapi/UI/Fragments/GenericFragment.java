@@ -63,8 +63,6 @@ public class GenericFragment extends Fragment implements IGenericUpdateUI,
         });
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerAdapter = getRecyclerAdapter(null);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
         if (MainActivity.API_TOKEN_present) new GenericTask().execute(this);
         return view;
     }

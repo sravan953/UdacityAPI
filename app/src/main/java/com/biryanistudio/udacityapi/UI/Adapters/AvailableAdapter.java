@@ -1,6 +1,7 @@
 package com.biryanistudio.udacityapi.UI.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,20 @@ import android.widget.TextView;
 import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Sravan on 07-Apr-16.
  */
 public class AvailableAdapter extends RecyclerView.Adapter<AvailableAdapter.AvailableViewHolder> {
+    private final String TAG = getClass().getSimpleName();
     private List<Certification> mData;
 
     public AvailableAdapter(List data) {
         this.mData = data;
+        filterAvailableCertificationsOnly();
+        Log.i(TAG, mData.toString());
     }
 
     @Override
@@ -43,8 +48,16 @@ public class AvailableAdapter extends RecyclerView.Adapter<AvailableAdapter.Avai
 
     @Override
     public int getItemCount() {
-        if(mData != null) return mData.size();
-        else return 0;
+        return mData.size();
+    }
+
+    private void filterAvailableCertificationsOnly() {
+        List<Certification> temp= new ArrayList<>();
+        for(Certification certification: mData) {
+            if(certification.getAwaitingReviewCount() > 0) temp.add(certification);
+        }
+        mData.clear();
+        mData.addAll(temp);
     }
 
     public class AvailableViewHolder extends RecyclerView.ViewHolder {

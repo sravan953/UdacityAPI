@@ -1,6 +1,7 @@
 package com.biryanistudio.udacityapi.UI.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,13 @@ import java.util.Locale;
  * Created by Sravan on 07-Apr-16.
  */
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedbackViewHolder> {
+    private final String TAG = getClass().getSimpleName();
     private List<Feedback> mData;
     private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
 
     public FeedbackAdapter(List data) {
         this.mData = data;
+        Log.i(TAG, mData.toString());
     }
 
     @Override
@@ -39,7 +42,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
     @Override
     public void onBindViewHolder(FeedbackViewHolder holder, int position) {
         try {
-            Feedback feedback = (Feedback) mData.get(position);
+            Feedback feedback = mData.get(position);
             holder.mProject.setText(feedback.getProject());
             //TODO: Feedback comments do not get displayed correctly when scrolling from bottom of list to top.
             if (feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals(""))
@@ -57,8 +60,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
 
     @Override
     public int getItemCount() {
-        if(mData != null) return mData.size();
-        else return 0;
+        return mData.size();
     }
 
     private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {

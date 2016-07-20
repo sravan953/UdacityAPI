@@ -1,6 +1,7 @@
 package com.biryanistudio.udacityapi.UI.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,15 @@ import java.util.TimeZone;
  * Created by Sravan on 07-Apr-16.
  */
 public class AssignedAdapter extends RecyclerView.Adapter<AssignedAdapter.AssignedViewHolder> {
-    private List mData;
+    private final String TAG = getClass().getSimpleName();
+    private List<Submission> mData;
     private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
 
     public AssignedAdapter(List data) {
         this.mData = data;
         inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Log.i(TAG, mData.toString());
     }
 
     @Override
@@ -43,7 +46,7 @@ public class AssignedAdapter extends RecyclerView.Adapter<AssignedAdapter.Assign
     @Override
     public void onBindViewHolder(AssignedAdapter.AssignedViewHolder holder, int position) {
         try {
-            Submission submission = (Submission) mData.get(position);
+            Submission submission = mData.get(position);
             holder.mProject.setText(submission.getProject());
             holder.mPrice.setText(String.format("$%s", submission.getRate()));
             //TODO: Time time left shows 35h instead of 11h. Need to fix this immediately.
@@ -58,8 +61,7 @@ public class AssignedAdapter extends RecyclerView.Adapter<AssignedAdapter.Assign
 
     @Override
     public int getItemCount() {
-        if(mData != null) return mData.size();
-        else return 0;
+        return mData.size();
     }
 
     private String getRemainingHoursForReview(Submission submission) throws ParseException {
