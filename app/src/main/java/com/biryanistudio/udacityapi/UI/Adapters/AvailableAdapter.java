@@ -1,11 +1,9 @@
 package com.biryanistudio.udacityapi.UI.Adapters;
 
-import android.content.Context;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.biryanistudio.udacityapi.Models.Certification;
@@ -16,46 +14,47 @@ import java.util.List;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AvailableAdapter extends ArrayAdapter<Certification> {
-    private final String TAG = getClass().getSimpleName();
-    private Context context;
-    private int resource;
-    private List<Certification> certificationsList;
-    private ViewHolder holder;
+public class AvailableAdapter extends RecyclerView.Adapter<AvailableAdapter.AvailableViewHolder> {
+    private List<Certification> mData;
 
-    public AvailableAdapter(Context context, int resource, List<Certification> certificationsList) {
-        super(context, resource, certificationsList);
-        this.context = context;
-        this.resource = resource;
-        this.certificationsList = certificationsList;
+    public AvailableAdapter(List data) {
+        this.mData = data;
     }
 
-    public View getView (int position, View convertView, ViewGroup parent) {
+    @Override
+    public AvailableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_available_review, parent, false);
+        AvailableViewHolder viewHolder = new AvailableViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(AvailableViewHolder holder, int position) {
         try {
-            Certification certification = certificationsList.get(position);
-            Log.d(TAG, certification.toString());
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(resource, parent, false);
-                holder = new ViewHolder();
-                holder.project = (TextView) convertView.findViewById(R.id.project);
-                holder.awaitingCount = (TextView) convertView.findViewById(R.id.awaiting_review_count);
-                convertView.setTag(holder);
-            }
-            holder = (ViewHolder) convertView.getTag();
-            holder.project.setText(certification.getProjectName());
-            holder.awaitingCount.setText(String.valueOf(certification.getAwaitingReviewCount()));
+            Certification certification = mData.get(position);
+            holder.mProject.setText(certification.getProjectName());
+            holder.mAwaitingCount.setText(String.valueOf(certification.getAwaitingReviewCount()));
         } catch (Exception e) {
             e.printStackTrace();
-            holder.project.setText(R.string.error_message);
+            holder.mProject.setText(R.string.error_message);
         }
-
-        convertView.setAlpha(0.0f);
-        convertView.animate().alpha(1.0f).setStartDelay(position * 50).start();
-        return convertView;
     }
 
-    private static class ViewHolder {
-        TextView project;
-        TextView awaitingCount;
+    @Override
+    public int getItemCount() {
+        if(mData != null) return mData.size();
+        else return 0;
+    }
+
+    public class AvailableViewHolder extends RecyclerView.ViewHolder {
+        private TextView mAwaitingCount;
+        private TextView mProject;
+
+        AvailableViewHolder(View v) {
+            super(v);
+            mAwaitingCount = (TextView) v.findViewById(R.id.awaiting_review_count);
+            mProject = (TextView) v.findViewById(R.id.project);
+        }
     }
 }

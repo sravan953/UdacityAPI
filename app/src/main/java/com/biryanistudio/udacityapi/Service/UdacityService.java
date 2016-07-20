@@ -2,7 +2,6 @@ package com.biryanistudio.udacityapi.Service;
 
 import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.Models.Feedback;
-import com.biryanistudio.udacityapi.Models.FeedbackStats;
 import com.biryanistudio.udacityapi.Models.Submission;
 
 import java.util.List;
@@ -24,9 +23,6 @@ public interface UdacityService {
 
     @GET("/api/v1/me/student_feedbacks.json")
     Call<List<Feedback>> getFeedback();
-
-    @GET("/api/v1/me/student_feedbacks/stats.json")
-    Call<FeedbackStats> getFeedbackStats();
 
     @POST("/projects/{project_id}/submissions/assign")
     Call<Submission> postAssignProject(@Path("project_id") int projectID);

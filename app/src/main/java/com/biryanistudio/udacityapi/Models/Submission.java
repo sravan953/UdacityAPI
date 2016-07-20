@@ -5,7 +5,7 @@ import org.json.JSONException;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class Submission extends BaseModel {
+public class Submission extends GenericModel {
     int id; // (number, optional): id of the submission for Reviews API
     String repo_url; // (string, optional): URL of the Github repo, if available
     String commit_sha; // (string, optional): SHA1 hash from the Github repo on creation of submission

@@ -3,7 +3,7 @@ package com.biryanistudio.udacityapi.Models;
 /**
  * Created by Sravan on 28-Apr-16.
  */
-public class Certification extends BaseModel {
+public class Certification extends GenericModel {
     int id; // (integer, optional)
     String status; // (string, optional) = ['applied', 'shortlisted', 'training', 'certified', 'inactive', 'blocked']
     boolean active; // (boolean, optional)

@@ -1,11 +1,9 @@
 package com.biryanistudio.udacityapi.UI.Adapters;
 
-import android.content.Context;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.biryanistudio.udacityapi.Models.Submission;
@@ -24,46 +22,44 @@ import java.util.TimeZone;
 /**
  * Created by Sravan on 07-Apr-16.
  */
-public class AssignedAdapter extends ArrayAdapter<Submission> {
-    private final String TAG = getClass().getSimpleName();
-    private int resource;
-    private List<Submission> submissionsList;
-    private ViewHolder holder;
+public class AssignedAdapter extends RecyclerView.Adapter<AssignedAdapter.AssignedViewHolder> {
+    private List mData;
     private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
 
-    public AssignedAdapter(Context context, int resource, List<Submission> submissionsList) {
-        super(context, resource, submissionsList);
-        this.resource = resource;
-        this.submissionsList = submissionsList;
+    public AssignedAdapter(List data) {
+        this.mData = data;
         inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    public View getView (int position, View convertView, ViewGroup parent) {
+    @Override
+    public AssignedAdapter.AssignedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_assigned_review, parent, false);
+        AssignedViewHolder viewHolder = new AssignedViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(AssignedAdapter.AssignedViewHolder holder, int position) {
         try {
-            Submission submission = submissionsList.get(position);
-            Log.d(TAG, submission.toString());
-            if (convertView == null) {
-                convertView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
-                holder = new ViewHolder();
-                holder.project = (TextView) convertView.findViewById(R.id.project);
-                holder.price = (TextView) convertView.findViewById(R.id.price);
-                holder.timeLeft = (TextView) convertView.findViewById(R.id.time_left);
-                convertView.setTag(holder);
-            }
-            holder = (ViewHolder) convertView.getTag();
-            holder.project.setText(submission.getProject());
-            holder.price.setText(String.format("$%s", submission.getRate()));
+            Submission submission = (Submission) mData.get(position);
+            holder.mProject.setText(submission.getProject());
+            holder.mPrice.setText(String.format("$%s", submission.getRate()));
             //TODO: Time time left shows 35h instead of 11h. Need to fix this immediately.
-            holder.timeLeft.setText(String.format("%sh left", getRemainingHoursForReview(submission)));
+            holder.mTimeLeft.setText(String.format("%sh left", getRemainingHoursForReview(submission)));
         } catch (JSONException e) {
             e.printStackTrace();
-            holder.project.setText(R.string.error_message);
-        } catch (Exception e) {
+            holder.mProject.setText(R.string.error_message);
+        } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        if(mData != null) return mData.size();
+        else return 0;
     }
 
     private String getRemainingHoursForReview(Submission submission) throws ParseException {
@@ -73,9 +69,16 @@ public class AssignedAdapter extends ArrayAdapter<Submission> {
         return String.valueOf(12 - (currentHours - assignedHours));
     }
 
-    private static class ViewHolder {
-        TextView project;
-        TextView price;
-        TextView timeLeft;
+    public class AssignedViewHolder extends RecyclerView.ViewHolder {
+        private TextView mTimeLeft;
+        private TextView mProject;
+        private TextView mPrice;
+
+        AssignedViewHolder(View v) {
+            super(v);
+            mTimeLeft = (TextView) v.findViewById(R.id.time_left);
+            mProject = (TextView) v.findViewById(R.id.project);
+            mPrice = (TextView) v.findViewById(R.id.price);
+        }
     }
 }
