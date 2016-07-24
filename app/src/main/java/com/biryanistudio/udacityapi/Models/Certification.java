@@ -1,7 +1,5 @@
 package com.biryanistudio.udacityapi.Models;
 
-import com.biryanistudio.udacityapi.Generics.GenericModel;
-
 /**
  * Created by Sravan on 28-Apr-16.
  */

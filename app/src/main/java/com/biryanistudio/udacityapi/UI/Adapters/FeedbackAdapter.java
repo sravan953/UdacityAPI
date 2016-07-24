@@ -24,11 +24,11 @@ import java.util.Locale;
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedbackViewHolder> {
     private final String TAG = getClass().getSimpleName();
     private List<Feedback> mData;
-    private SimpleDateFormat mInputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-            Locale.getDefault());
+    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
 
     public FeedbackAdapter(List data) {
         this.mData = data;
+        Log.i(TAG, mData.toString());
     }
 
     @Override
@@ -44,11 +44,12 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
         try {
             Feedback feedback = mData.get(position);
             holder.mProject.setText(feedback.getProject());
-            if (feedback.getBody() == null || feedback.getBody().isEmpty()
-                    || feedback.getBody().equals("")) holder.mBody.setVisibility(View.GONE);
+            //TODO: Feedback comments do not get displayed correctly when scrolling from bottom of list to top.
+            if (feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals(""))
+                holder.mBody.setVisibility(View.GONE);
             else holder.mBody.setText(feedback.getBody());
             holder.mRating.setText(String.format("%s/5", String.valueOf(feedback.getRating())));
-            holder.mUpdatedAt.setText(getElapsedTimeForFeedback(feedback));
+            holder.mUpdatedAt.setText(getElapsedHoursForFeedback(feedback));
         } catch (JSONException e) {
             e.printStackTrace();
             holder.mProject.setText(R.string.error_message);
@@ -62,20 +63,20 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
         return mData.size();
     }
 
-    private String getElapsedTimeForFeedback(Feedback feedback) throws ParseException {
-        Date d = mInputDateFormat.parse(feedback.getUpdatedAt());
+    private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
+        Date d = inputDateFormat.parse(feedback.getUpdatedAt());
         long assignedLong = d.getTime();
-        Log.i(TAG, assignedLong + "");
         long currentLong = System.currentTimeMillis();
         long remainingLong = currentLong - assignedLong;
         int remainingHours = (int) remainingLong / (1000 * 60 * 60);
-        if (remainingHours >= 24) {
+        if (remainingHours > 24) {
             remainingHours = remainingHours / 24;
             return String.valueOf(remainingHours) + "d ago";
         } else {
             return String.valueOf(remainingHours) + "h ago";
         }
     }
+
 
     public class FeedbackViewHolder extends RecyclerView.ViewHolder {
         private TextView mProject;

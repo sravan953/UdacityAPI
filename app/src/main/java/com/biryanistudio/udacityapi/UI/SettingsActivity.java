@@ -3,6 +3,8 @@ package com.biryanistudio.udacityapi.UI;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
+import com.biryanistudio.udacityapi.UI.Fragments.SettingsFragment;
+
 public class SettingsActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {

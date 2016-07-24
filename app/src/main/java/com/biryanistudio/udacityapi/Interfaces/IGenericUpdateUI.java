@@ -1,4 +1,4 @@
-package com.biryanistudio.udacityapi.Generics;
+package com.biryanistudio.udacityapi.Interfaces;
 
 import java.util.List;
 

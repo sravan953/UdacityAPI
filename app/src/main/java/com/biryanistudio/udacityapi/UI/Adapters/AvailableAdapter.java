@@ -52,9 +52,9 @@ public class AvailableAdapter extends RecyclerView.Adapter<AvailableAdapter.Avai
     }
 
     private void filterAvailableCertificationsOnly() {
-        List<Certification> temp = new ArrayList<>();
-        for (Certification certification : mData) {
-            if (certification.getAwaitingReviewCount() > 0) temp.add(certification);
+        List<Certification> temp= new ArrayList<>();
+        for(Certification certification: mData) {
+            if(certification.getAwaitingReviewCount() > 0) temp.add(certification);
         }
         mData.clear();
         mData.addAll(temp);
