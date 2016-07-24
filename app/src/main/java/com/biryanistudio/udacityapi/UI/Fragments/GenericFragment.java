@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.biryanistudio.udacityapi.FragmentType;
 import com.biryanistudio.udacityapi.Interfaces.IGenericUpdateUI;
+import com.biryanistudio.udacityapi.Models.EmptyRecyclerView;
 import com.biryanistudio.udacityapi.R;
 import com.biryanistudio.udacityapi.Tasks.GenericTask;
 import com.biryanistudio.udacityapi.UI.Adapters.AssignedAdapter;
@@ -27,28 +29,27 @@ import java.util.List;
  */
 public class GenericFragment extends Fragment implements IGenericUpdateUI,
         SwipeRefreshLayout.OnRefreshListener {
-    public FragmentType mFragmentType;
+    private FragmentType mFragmentType;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mRecyclerAdapter;
+    private EmptyRecyclerView mRecyclerView;
 
-    public static GenericFragment newInstance(FragmentType fragmentType) {
-        Bundle args = new Bundle();
+    public static GenericFragment newInstance(final FragmentType fragmentType) {
+        final Bundle args = new Bundle();
         args.putSerializable("TYPE", fragmentType);
-        GenericFragment fragment = new GenericFragment();
+        final GenericFragment fragment = new GenericFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentType = (FragmentType) getArguments().getSerializable("TYPE");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment, container, false);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorAccent),
@@ -61,19 +62,22 @@ public class GenericFragment extends Fragment implements IGenericUpdateUI,
                 mSwipeRefreshLayout.setRefreshing(true);
             }
         });
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        final TextView emptyList = (TextView) view.findViewById(R.id.emptyList);
+        emptyList.setText(getEmptyText());
+        mRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setEmptyView(emptyList);
         if (MainActivity.API_TOKEN_present) new GenericTask().execute(this);
         return view;
     }
 
     @Override
-    public void newData(List data) {
+    public void newData(final List data) {
         try {
             mSwipeRefreshLayout.setRefreshing(false);
-            mRecyclerAdapter = getRecyclerAdapter(data);
+            final RecyclerView.Adapter mRecyclerAdapter = getRecyclerAdapter(data);
             mRecyclerView.setAdapter(mRecyclerAdapter);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -83,7 +87,7 @@ public class GenericFragment extends Fragment implements IGenericUpdateUI,
         if (MainActivity.API_TOKEN_present) new GenericTask().execute(this);
     }
 
-    private RecyclerView.Adapter getRecyclerAdapter(List data) {
+    private RecyclerView.Adapter getRecyclerAdapter(final List data) {
         switch(getFragmentType()) {
             case ASSIGNED:
                 return new AssignedAdapter(data);
@@ -91,6 +95,19 @@ public class GenericFragment extends Fragment implements IGenericUpdateUI,
                 return new AvailableAdapter(data);
             case FEEDBACK:
                 return new FeedbackAdapter(data);
+            default:
+                return null;
+        }
+    }
+
+    private String getEmptyText() {
+        switch (getFragmentType()) {
+            case ASSIGNED:
+                return getString(R.string.empty_assigned_review);
+            case AVAILABLE:
+                return getString(R.string.empty_available_review);
+            case FEEDBACK:
+                return getString(R.string.empty_feedback);
             default:
                 return null;
         }
