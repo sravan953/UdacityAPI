@@ -1,5 +1,7 @@
 package com.biryanistudio.udacityapi.Models;
 
+import com.biryanistudio.udacityapi.Generics.GenericModel;
+
 import org.json.JSONException;
 
 /**

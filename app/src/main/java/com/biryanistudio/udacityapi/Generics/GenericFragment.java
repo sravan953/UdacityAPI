@@ -1,4 +1,4 @@
-package com.biryanistudio.udacityapi.UI.Fragments;
+package com.biryanistudio.udacityapi.Generics;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -13,10 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.biryanistudio.udacityapi.FragmentType;
-import com.biryanistudio.udacityapi.Interfaces.IGenericUpdateUI;
 import com.biryanistudio.udacityapi.Models.EmptyRecyclerView;
 import com.biryanistudio.udacityapi.R;
-import com.biryanistudio.udacityapi.Tasks.GenericTask;
 import com.biryanistudio.udacityapi.UI.Adapters.AssignedAdapter;
 import com.biryanistudio.udacityapi.UI.Adapters.AvailableAdapter;
 import com.biryanistudio.udacityapi.UI.Adapters.FeedbackAdapter;
