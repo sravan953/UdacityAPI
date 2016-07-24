@@ -5,7 +5,7 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.biryanistudio.udacityapi.FragmentType;
-import com.biryanistudio.udacityapi.UI.Fragments.GenericFragment;
+import com.biryanistudio.udacityapi.Generics.GenericFragment;
 
 /**
  * Created by Sravan on 07-Apr-16.

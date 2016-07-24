@@ -1,4 +1,4 @@
-package com.biryanistudio.udacityapi.UI.Fragments;
+package com.biryanistudio.udacityapi.UI;
 
 import android.content.ComponentName;
 import android.net.Uri;

@@ -1,16 +1,14 @@
-package com.biryanistudio.udacityapi.Tasks;
+package com.biryanistudio.udacityapi.Generics;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.biryanistudio.udacityapi.FragmentType;
-import com.biryanistudio.udacityapi.Interfaces.IGenericUpdateUI;
 import com.biryanistudio.udacityapi.Models.Certification;
 import com.biryanistudio.udacityapi.Models.Feedback;
 import com.biryanistudio.udacityapi.Models.Submission;
 import com.biryanistudio.udacityapi.Service.RetrofitInstance;
 import com.biryanistudio.udacityapi.Service.UdacityService;
-import com.biryanistudio.udacityapi.UI.Fragments.GenericFragment;
 
 import java.util.List;
 

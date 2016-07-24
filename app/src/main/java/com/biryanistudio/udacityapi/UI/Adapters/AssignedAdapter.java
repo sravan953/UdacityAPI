@@ -26,12 +26,13 @@ import java.util.TimeZone;
 public class AssignedAdapter extends RecyclerView.Adapter<AssignedAdapter.AssignedViewHolder> {
     private final String TAG = getClass().getSimpleName();
     private List<Submission> mData;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-    private SimpleDateFormat outputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
+    private SimpleDateFormat mInputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            Locale.getDefault());
+    private SimpleDateFormat mOutputDateFormat = new SimpleDateFormat("HH", Locale.getDefault());
 
     public AssignedAdapter(List data) {
         this.mData = data;
-        inputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        mInputDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Log.i(TAG, mData.toString());
     }
 
@@ -65,8 +66,8 @@ public class AssignedAdapter extends RecyclerView.Adapter<AssignedAdapter.Assign
     }
 
     private String getRemainingHoursForReview(Submission submission) throws ParseException {
-        Date d = inputDateFormat.parse(submission.getAssignedAt());
-        int assignedHours = Integer.parseInt(outputDateFormat.format(d));
+        Date d = mInputDateFormat.parse(submission.getAssignedAt());
+        int assignedHours = Integer.parseInt(mOutputDateFormat.format(d));
         int currentHours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return String.valueOf(12 - (currentHours - assignedHours));
     }
