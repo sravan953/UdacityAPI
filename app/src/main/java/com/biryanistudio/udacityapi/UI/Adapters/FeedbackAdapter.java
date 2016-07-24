@@ -23,37 +23,38 @@ import java.util.Locale;
  */
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedbackViewHolder> {
     private final String TAG = getClass().getSimpleName();
+    private final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     private List<Feedback> mData;
-    private SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
 
-    public FeedbackAdapter(List data) {
+    public FeedbackAdapter(final List<Feedback> data) {
         this.mData = data;
         Log.i(TAG, mData.toString());
     }
 
     @Override
-    public FeedbackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+    public FeedbackViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_feedback, parent, false);
-        FeedbackViewHolder viewHolder = new FeedbackViewHolder(view);
-        return viewHolder;
+        return new FeedbackViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(FeedbackViewHolder holder, int position) {
+    public void onBindViewHolder(final FeedbackViewHolder holder, final int position) {
         try {
-            Feedback feedback = mData.get(position);
+            final Feedback feedback = mData.get(position);
             holder.mProject.setText(feedback.getProject());
-            //TODO: Feedback comments do not get displayed correctly when scrolling from bottom of list to top.
             if (feedback.getBody() == null || feedback.getBody().isEmpty() || feedback.getBody().equals(""))
                 holder.mBody.setVisibility(View.GONE);
-            else holder.mBody.setText(feedback.getBody());
+            else {
+                holder.mBody.setVisibility(View.VISIBLE);
+                holder.mBody.setText(feedback.getBody());
+            }
             holder.mRating.setText(String.format("%s/5", String.valueOf(feedback.getRating())));
             holder.mUpdatedAt.setText(getElapsedHoursForFeedback(feedback));
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
             holder.mProject.setText(R.string.error_message);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -63,11 +64,11 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
         return mData.size();
     }
 
-    private String getElapsedHoursForFeedback(Feedback feedback) throws ParseException {
-        Date d = inputDateFormat.parse(feedback.getUpdatedAt());
-        long assignedLong = d.getTime();
-        long currentLong = System.currentTimeMillis();
-        long remainingLong = currentLong - assignedLong;
+    private String getElapsedHoursForFeedback(final Feedback feedback) throws ParseException {
+        final Date d = inputDateFormat.parse(feedback.getUpdatedAt());
+        final long assignedLong = d.getTime();
+        final long currentLong = System.currentTimeMillis();
+        final long remainingLong = currentLong - assignedLong;
         int remainingHours = (int) remainingLong / (1000 * 60 * 60);
         if (remainingHours > 24) {
             remainingHours = remainingHours / 24;
@@ -77,14 +78,13 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
         }
     }
 
-
-    public class FeedbackViewHolder extends RecyclerView.ViewHolder {
+    class FeedbackViewHolder extends RecyclerView.ViewHolder {
         private TextView mProject;
         private TextView mRating;
         private TextView mUpdatedAt;
         private TextView mBody;
 
-        FeedbackViewHolder(View v) {
+        FeedbackViewHolder(final View v) {
             super(v);
             mProject = (TextView) v.findViewById(R.id.project);
             mRating = (TextView) v.findViewById(R.id.rating);
