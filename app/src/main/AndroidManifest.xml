@@ -20,9 +20,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UI.SettingsActivity"
-            android:parentActivityName=".UI.MainActivity"/>
-        
         <receiver android:name=".UI.MainActivity$ConnectivityChangeReceiver">
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
         </receiver>
